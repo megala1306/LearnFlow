@@ -1,0 +1,310 @@
+{
+  "Python Essentials & Syntax": {
+    "easy": {
+      "transcript": "Basics of Python syntax and the Zen of Python.",
+      "notes": [
+        { "heading": "01: The Zen of Python Philosophy", "paragraphs": ["'Beautiful is better than ugly'—clarity over brevity.", "```python\nimport this```"] },
+        { "heading": "02: Mandatory Indentation (4-Spaces)", "paragraphs": ["Whitespace defines blocks. ERROR if inconsistent.", "```python\ndef block():\n    print('Indented')```"] },
+        { "heading": "03: Variable Pointer Mechanics", "paragraphs": ["Variables are pointers to objects.", "```python\nx = 10\nprint(id(x))```"] },
+        { "heading": "04: Numerical Operations (Ints/Floats)", "paragraphs": ["Integers have arbitrary precision. Floats follow IEEE 754.", "```python\na = 10; b = 2.5\nprint(a * b)```"] },
+        { "heading": "05: Masterful Strings (str)", "paragraphs": ["Strings are sequences. Triple quotes for multi-line.", "```python\ns = \"\"\"Multi-line\"\"\"```"] },
+        { "heading": "06: Dynamic Reassignment Patterns", "paragraphs": ["Variables can change types freely.", "```python\nx = 5; x = 'Now string'```"] },
+        { "heading": "07: Interaction Protocols (I/O)", "paragraphs": ["print() for out, input() for in.", "```python\nval = input('Age: ')```"] },
+        { "heading": "08: PEP 8: Styled Standards", "paragraphs": ["Use snake_case for names.", "```python\nuser_name = 'Flow'```"] }
+      ],
+      "quiz": [
+        { "question": "The 'Zen of Python' (PEP 20) emphasizes which core design principle?", "options": ["Performance over readability", "Explicit is better than implicit", "Memory safety over speed", "Minimalism over extensive documentation"], "answer": "Explicit is better than implicit" },
+        { "question": "What is the primary technical role of indentation in Python?", "options": ["Visual organization only", "Defining lexical scope and blocks", "Improving compiler optimization", "Standardizing documentation strings"], "answer": "Defining lexical scope and blocks" },
+        { "question": "In Python's technical model, what are variables actually considered?", "options": ["Fixed data containers", "Pointers to memory objects", "String-based aliases", "Static typed references"], "answer": "Pointers to memory objects" },
+        { "question": "Why does multiplying 10 * 2.5 return a 'float' type technically?", "options": ["Implicit type coercion (upcasting)", "Floating point error", "Arbitrary precision integer limit", "Default output of all multiplication"], "answer": "Implicit type coercion (upcasting)" },
+        { "question": "Triple quotes (\"\"\") are used for which specific technical purpose?", "options": ["Defining global constants", "Multi-line string preservation/docstrings", "Increasing raw execution speed", "Escaping special characters automatically"], "answer": "Multi-line string preservation/docstrings" },
+        { "question": "Dynamic typing allows which specific behavior in your code?", "options": ["Reassigning any variable to a new object type", "Changing the memory id of an immutable object", "Compiling variables before runtime", "Increasing static type safety"], "answer": "Reassigning any variable to a new object type" },
+        { "question": "The input() function always returns data in which technical format?", "options": ["Integer", "Boolean", "Unicode String (str)", "Binary Byte Stream"], "answer": "Unicode String (str)" },
+        { "question": "PEP 8 recommends which naming convention for standard variables?", "options": ["camelCase", "PascalCase", "snake_case", "UPPER_CASE"], "answer": "snake_case" },
+        { "question": "What happens if indentation is inconsistent within a single block?", "options": ["IndentationError is raised", "Code runs with warnings", "Python ignores the whitespace", "Logic becomes unpredictable but no error"], "answer": "IndentationError is raised" },
+        { "question": "Readability is a core pillar of Python because...", "options": ["It reduces CPU cycles", "Code is read much more often than written", "It bypasses the Global Interpreter Lock", "It is required for all compiled modules"], "answer": "Code is read much more often than written" }
+      ]
+    },
+    "medium": {
+      "transcript": "Interpolation and Slicing.",
+      "notes": [
+        { "heading": "01: F-Strings & Interpolation", "paragraphs": ["Modern interpolation with {}.", "```python\nprint(f'{name} is {26}')```"] },
+        { "heading": "02: Explicit Type Casting", "paragraphs": ["int(), float(), str().", "```python\nnum = int('10')```"] },
+        { "heading": "03: String Slicing Mechanics", "paragraphs": ["Reverse with [::-1].", "```python\nprint(s[::-1])```"] },
+        { "heading": "04: Immutability Standards", "paragraphs": ["Strings cannot change in-place.", "```python\ns = 'A'; s_copy = s[:]```"] },
+        { "heading": "05: Escape Characters", "paragraphs": ["\\n for new line, r'' for raw.", "```python\nprint(r'C:\\path')```"] },
+        { "heading": "06: Multi-line Application", "paragraphs": ["SQL or Docs preservation.", "```python\nsql = \"\"\"SELECT *\"\"\"```"] },
+        { "heading": "07: Comparison Logic", "paragraphs": ["and, or, not. Chaining: 1 < x < 10.", "```python\nif 1 < x < 10: pass```"] },
+        { "heading": "08: Docstrings", "paragraphs": ["Technical function documentation.", "```python\ndef f(): \"\"\"Doc\"\"\"```"] }
+      ],
+      "quiz": [
+        { "question": "F-strings (formatted string literals) provide which technical advantage?", "options": ["Runtime expression evaluation", "Static string compilation", "Global scope isolation", "Automatic encryption of contents"], "answer": "Runtime expression evaluation" },
+        { "question": "What is the risk of using int() on a raw input without validation?", "options": ["ValueError on non-numeric strings", "Memory leak in string buffer", "Implicit float conversion", "Logical bit-flipping"], "answer": "ValueError on non-numeric strings" },
+        { "question": "The slicing syntax [::-1] accomplishes what technically?", "options": ["Deleting the last character", "Starting from index -1", "Reversing the entire sequence", "Accessing memory meta-data"], "answer": "Reversing the entire sequence" },
+        { "question": "When you 'edit' a string in Python, what actually happens in memory?", "options": ["In-place byte replacement", "Creation of a new string object", "Modification of the existing object pointer", "Deletion of the garbage collector"], "answer": "Creation of a new string object" },
+        { "question": "The r'' (raw string) prefix is essential for which scenario?", "options": ["SQL queries", "Windows file paths with backslashes", "Increasing read speed", "Preventing string interpolation"], "answer": "Windows file paths with backslashes" },
+        { "question": "How does Python evaluate a chained comparison like '1 < x < 10'?", "options": ["Evaluates left then right with 'and'", "Evaluates right then left with 'or'", "Sums the results first", "Python cannot chain comparisons"], "answer": "Evaluates left then right with 'and'" },
+        { "question": "Where is a docstring technically placed within a function definition?", "options": ["First line of the function body", "Outside the function header", "In the return statement", "Last line before function termination"], "answer": "First line of the function body" },
+        { "question": "Is the 'and' operator higher in precedence than 'or' in logic chains?", "options": ["Yes, 'and' is evaluated first", "No, 'or' is evaluated first", "They share equal precedence", "It depends on the parentheses used"], "answer": "Yes, 'and' is evaluated first" },
+        { "question": "The slice 'python'[0:2] returns 'py' because the stop index is...", "options": ["Inclusive", "Exclusive", "Optional", "Offset by 1"], "answer": "Exclusive" },
+        { "question": "Strings are immutable which means their internal contents...", "options": ["Cannot be modified after creation", "Can be edited only by math.str()", "Always take 2x memory", "Are automatically cleared"], "answer": "Cannot be modified after creation" }
+      ]
+    },
+    "hard": {
+      "transcript": "Memory mechanics and identity.",
+      "notes": [
+        { "heading": "01: Deep-Dive into Identity", "paragraphs": ["id() memory addresses.", "```python\nprint(id(x))```"] },
+        { "heading": "02: is vs ==", "paragraphs": ["== checks value; is checks location.", "```python\na = [1]; b = [1]\nprint(a is b) # False```"] },
+        { "heading": "03: Interning", "paragraphs": ["Reusing integers -5 to 256.", "```python\nx = 100; y = 100; print(x is y) # True```"] },
+        { "heading": "04: Mutability Hazards", "paragraphs": ["Lists modified in-place affect all pointers.", "```python\na = [1]; b = a; b.append(2)```"] },
+        { "heading": "05: deepcopy()", "paragraphs": ["Recursive structures copying.", "```python\nimport copy; b = copy.deepcopy(a)```"] },
+        { "heading": "06: GC logic", "paragraphs": ["Reference counting and cycle management.", "```python\nimport sys; sys.getrefcount(x)```"] },
+        { "heading": "07: NoneType Singleton", "paragraphs": ["One None object in memory.", "```python\nif x is None: pass```"] },
+        { "heading": "08: Bitwise Flags", "paragraphs": ["& and | for state logic.", "```python\nprint(a & b)```"] }
+      ],
+      "quiz": [
+        { "question": "The 'is' operator checks for which technical property?", "options": ["Value equality", "Memory object identity", "Type compatibility", "Data compression level"], "answer": "Memory object identity" },
+        { "question": "Why does 'x = 100; y = 100; x is y' return True technically?", "options": ["Value caching in the compiler", "Integer interning in CPython", "Automatic reference garbage collection", "Memory address aliasing"], "answer": "Integer interning in CPython" },
+        { "question": "Integer interning in Python typically occurs in which range by default?", "options": ["0 to 100", "-5 to 256", "All negative integers", "All positive integers"], "answer": "-5 to 256" },
+        { "question": "What is the primary risk of assigning a=b when 'b' is a mutable list?", "options": ["Both variables point to the same memory object", "Data is copied automatically", "The program gains 2x memory usage", "List b becomes immutable"], "answer": "Both variables point to the same memory object" },
+        { "question": "In what scenario is copy.deepcopy() technically mandatory?", "options": ["Copying flat strings", "Copying nested mutable structures", "Resetting memory addresses", "Encrypting list contents"], "answer": "Copying nested mutable structures" },
+        { "question": "Python primarily manages memory using which core mechanism?", "options": ["Manual deallocation", "Reference counting with cycle detection", "Static stack allocation", "Neural garbage collection"], "answer": "Reference counting with cycle detection" },
+        { "question": "Testing if x is None is preferred over x == None because...", "options": ["'is' is faster and safer (Identity check)", "None is a changeable object", "== only works for integers", "'is' initializes the variable"], "answer": "'is' is faster and safer (Identity check)" },
+        { "question": "The & (Bitwise AND) operator perform which operation on integers?", "options": ["Sums the values", "Logical AND on binary representations", "Binary shift right", "Power of calculation"], "answer": "Logical AND on binary representations" },
+        { "question": "Everything in Python is technically an 'object'. What does this include?", "options": ["Only classes and instances", "Variables, functions, and even types", "Only strings and lists", "Only data stored on the SSD"], "answer": "Variables, functions, and even types" },
+        { "question": "Where are Python's runtime memory addresses typically located?", "options": ["The Heap / Private RAM", "The CPU cache only", "The swap file on disk", "The ROM chip"], "answer": "The Heap / Private RAM" }
+      ]
+    }
+  },
+  "Algorithmic Control Flow": {
+    "easy": {
+      "transcript": "Logic flow: if, for, while.",
+      "notes": [
+        { "heading": "01: Truthiness & Falsiness", "paragraphs": ["None, 0, [] are Falsy.", "```python\nif not []: print('Falsy')```"] },
+        { "heading": "02: Multi-Path branching", "paragraphs": ["if, elif, else usage.", "```python\nif x > 1: pass```"] },
+        { "heading": "03: range() laziness", "paragraphs": ["Generator-like range usage.", "```python\nfor i in range(5): ...```"] },
+        { "heading": "04: for iteration", "paragraphs": ["Default sequence iterating.", "```python\nfor item in list: print(item)```"] },
+        { "heading": "05: while looping", "paragraphs": ["Conditional execution.", "```python\nwhile x > 0: x -= 1```"] },
+        { "heading": "06: Loop-Else block", "paragraphs": ["Executing if NO break.", "```python\nfor x in r: pass\nelse: print('No break')```"] },
+        { "heading": "07: break termination", "paragraphs": ["Instant loop stop.", "```python\nwhile True: break```"] },
+        { "heading": "08: continue skipping", "paragraphs": ["Jump to next iteration.", "```python\nfor i in r: continue```"] }
+      ],
+      "quiz": [
+        { "question": "Which of the following is technically considered 'Falsy' in Python?", "options": ["[0]", "Empty List []", "\" \" (space)", "all integers > 0"], "answer": "Empty List []" },
+        { "question": "The 'elif' keyword is a technical shorthand for what?", "options": ["else if", "every loop if", "end linear if", "external logical if"], "answer": "else if" },
+        { "question": "Which keyword immediately terminates the innermost enclosing loop?", "options": ["exit", "continue", "break", "cancel"], "answer": "break" },
+        { "question": "The range(5) generator will produce which sequence of numbers?", "options": ["1, 2, 3, 4, 5", "0, 1, 2, 3, 4", "5, 5, 5", "None"], "answer": "0, 1, 2, 3, 4" },
+        { "question": "A loop's 'else' block executes only under which condition?", "options": ["If the loop completes WITHOUT meeting a break", "If the loop meets a break early", "If the loop never starts", "Always after every loop ends"], "answer": "If the loop completes WITHOUT meeting a break" },
+        { "question": "The 'continue' keyword has which specific effect on a loop?", "options": ["Exits the loop entirely", "Skips current iteration and moves to next", "Pauses the loop", "Resets the loop counter"], "answer": "Skips current iteration and moves to next" },
+        { "question": "What is the result of 'while True:' without a break statement?", "options": ["Syntax Error", "Immediate system crash", "Infinite loop (logic lock)", "Variable increment error"], "answer": "Infinite loop (logic lock)" },
+        { "question": "How does Python determine which code belongs inside an 'if' statement?", "options": ["Bracket markers { }", "Mandatory Indentation level", "Specific keywords like 'is_inside'", "File line numbers"], "answer": "Mandatory Indentation level" },
+        { "question": "The logical 'not' operator performs which technical task?", "options": ["Inverting a boolean value", "Deleting a variable", "Clearing memory cache", "Formatting a string"], "answer": "Inverting a boolean value" },
+        { "question": "What is the shorthand syntax for incrementing x by 1?", "options": ["x++", "++x", "x += 1", "x.add(1)"], "answer": "x += 1" }
+      ]
+    },
+    "medium": {
+      "transcript": "Comprehensions.",
+      "notes": [
+        { "heading": "01: List Comprehension", "paragraphs": ["One-line creation logic.", "```python\nl = [x*x for x in r]```"] },
+        { "heading": "02: Nested Loops", "paragraphs": ["Grid processing layers.", "```python\nfor r in g: for c in r: ...```"] },
+        { "heading": "03: Ternary Operators", "paragraphs": ["A if C else B.", "```python\nval = 1 if ok else 0```"] },
+        { "heading": "04: Short-Circuiting", "paragraphs": ["and/or logic skip.", "```python\nif x and costly(): pass```"] },
+        { "heading": "05: Dict Comprehensions", "paragraphs": ["{key: val for...}", "```python\nd = {x: x for x in r}```"] },
+        { "heading": "06: Set Comprehensions", "paragraphs": ["Rapid unique sets.", "```python\ns = {x for x in r}```"] },
+        { "heading": "07: Flattening logic", "paragraphs": ["2D to 1D via comps.", "```python\nflat = [x for r in g for x in r]```"] },
+        { "heading": "08: pass No-Op", "paragraphs": ["Placeholder keyword.", "```python\nif ok: pass```"] }
+      ],
+      "quiz": [
+        { "question": "What is the output of the list comprehension: [x for x in [1, 2, 3] if x > 1]?", "options": ["[1, 2, 3]", "[2, 3]", "[1]", "None"], "answer": "[2, 3]" },
+        { "question": "Why are list comprehensions technically faster than standard for-loops?", "options": ["They run in the GPU", "Optimized C implementation at the interpreter level", "They skip bytecode generation", "They use less RAM"], "answer": "Optimized C implementation at the interpreter level" },
+        { "question": "Python's ternary expression (inline if) follows which syntax?", "options": ["Result = Condition ? A : B", "Result = A if Condition else B", "Result = if Condition then A", "None"], "answer": "Result = A if Condition else B" },
+        { "question": "What is logical 'short-circuiting' in an 'and' expression?", "options": ["Stopping evaluation as soon as a Falsy value is found", "Calculating all results then picking one", "Speeding up the CPU clock", "Bypassing the if statement"], "answer": "Stopping evaluation as soon as a Falsy value is found" },
+        { "question": "The 'pass' keyword serves what technical purpose?", "options": ["Terminating a loop", "No-operation placeholder for expected syntax", "Clearing a variable", "Passing data to another file"], "answer": "No-operation placeholder for expected syntax" },
+        { "question": "The syntax for a dictionary comprehension is which of the following?", "options": ["{k: v for...}", "[k: v for...]", "dict(k, v for...)", "None"], "answer": "{k: v for...}" },
+        { "question": "Which syntax correctly flattens a nested list 'grid' using comprehension?", "options": ["[x for row in grid for x in row]", "[row for x in row in grid]", "[x in grid row for...]", "None"], "answer": "[x for row in grid for x in row]" },
+        { "question": "Can list comprehensions technically contain nested loops?", "options": ["Yes, multiple 'for' clauses are allowed", "No, only single loops are supported", "Only in Python 3.12+", "Only for integer lists"], "answer": "Yes, multiple 'for' clauses are allowed" },
+        { "question": "In the logic '1.0 or costly_func()', why is the function NOT called?", "options": ["The 'or' operator short-circuits on the first Truthy value", "The function is ignored by the compiler", "1.0 is considered Falsy", "There is a syntax error"], "answer": "The 'or' operator short-circuits on the first Truthy value" },
+        { "question": "Set comprehensions automatically provide which specific benefit?", "options": ["Ordered contents", "Automatic removal of duplicates", "Compression of data", "Faster search speed"], "answer": "Automatic removal of duplicates" }
+      ]
+    },
+    "hard": {
+      "transcript": "Generators & Protocol.",
+      "notes": [
+        { "heading": "01: Generators ()", "paragraphs": ["Memory efficient lazy items.", "```python\ngen = (x for x in r)```"] },
+        { "heading": "02: Zip parallel", "paragraphs": ["Synchronized sequences.", "```python\nfor a,b in zip(L1, L2): ...```"] },
+        { "heading": "03: Enumerate", "paragraphs": ["Index and value.", "```python\nfor i,v in enumerate(L): ...```"] },
+        { "heading": "04: yield keyword", "paragraphs": ["Pause/resume logic.", "```python\ndef g(): yield 1```"] },
+        { "heading": "05: Iterator Protocol", "paragraphs": ["__iter__ and __next__.", "```python\nit = iter(L)```"] },
+        { "heading": "06: any/all checks", "paragraphs": ["Sequence boolean checks.", "```python\nif any(bools): pass```"] },
+        { "heading": "07: Itertools", "paragraphs": ["Optimized iterators.", "```python\nfrom itertools import chain```"] },
+        { "heading": "08: Infinite stream", "paragraphs": ["itertools.count().", "```python\nfor i in count(): ...```"] }
+      ],
+      "quiz": [
+        { "question": "What is the core memory advantage of a Generator over a List?", "options": ["Generators compress data", "Generators use lazy evaluation (one item at a time)", "Generators bypass the GIL", "Lists are limited to 1GB"], "answer": "Generators use lazy evaluation (one item at a time)" },
+        { "question": "The 'yield' keyword technically transforms a function into what?", "options": ["A Lambda object", "A Generator object", "A Thread-safe module", "A Documentation block"], "answer": "A Generator object" },
+        { "question": "The enumerate() function returns a sequence of which technical structure?", "options": ["Lists of pairs", "Tuples containing (index, value)", "Single values only", "Dictionary keys"], "answer": "Tuples containing (index, value)" },
+        { "question": "How do you technically retrieve the next item from an iterator object?", "options": ["i.next()", "call next(i)", "yield(i)", "fetch(i)"], "answer": "call next(i)" },
+        { "question": "The all() function returns True under which specific technical condition?", "options": ["At least one value is Truthy", "All values in the iterable are Truthy", "The iterable is empty", "No values are zero"], "answer": "All values in the iterable are Truthy" },
+        { "question": "What does the any() function check for technically?", "options": ["If at least one element is Truthy", "If all elements are Falsy", "If the object is a list", "If it contains strings"], "answer": "If at least one element is Truthy" },
+        { "question": "itertools.count() is a technical tool used for what?", "options": ["Counting occurrences in a list", "Creating an infinite sequence generator", "Resetting memory counters", "Measuring code execution speed"], "answer": "Creating an infinite sequence generator" },
+        { "question": "What methods are required to implement the Iterator Protocol in a class?", "options": ["__start__ / __stop__", "__iter__ / __next__", "__call__ / __init__", "None"], "answer": "__iter__ / __next__" },
+        { "question": "Can a Generator object be iterated over twice in Python?", "options": ["Yes, it is reusable", "No, it is exhausted after one pass", "Only if it is formatted as a list", "Only for integer streams"], "answer": "No, it is exhausted after one pass" },
+        { "question": "The zip() function behaves in which way when sequences are unequal lengths?", "options": ["Stops at the SHORTEST sequence", "Fills with None", "Raises an IndexError", "Stretches the shorter sequence"], "answer": "Stops at the SHORTEST sequence" }
+      ]
+    }
+  },
+  "Advanced Data Structures": {
+    "easy": {
+      "transcript": "Lists & Dicts.",
+      "notes": [
+        { "heading": "01: Sequence (List)", "paragraphs": ["Mutable ordered data.", "```python\nL = [1]; L.append(2)```"] },
+        { "heading": "02: KV Hash (Dict)", "paragraphs": ["O(1) lookups.", "```python\nd = {1: 'A'}```"] },
+        { "heading": "03: Safe .get()", "paragraphs": ["Avoiding KeyError.", "```python\nd.get('key', 'default')```"] },
+        { "heading": "04: Dict Expansion", "paragraphs": ["Adding at runtime.", "```python\nd['new'] = 1```"] },
+        { "heading": "05: list.sort()", "paragraphs": ["In-place modification.", "```python\nL.sort()```"] },
+        { "heading": "06: Membership (in)", "paragraphs": ["Efficient checks.", "```python\nif 'k' in d: pass```"] },
+        { "heading": "07: Nesting", "paragraphs": ["Complex compositions.", "```python\ndata = [{'id': 1}]```"] },
+        { "heading": "08: Dict Views", "paragraphs": ["keys/values/items usage.", "```python\nfor k,v in d.items(): ...```"] }
+      ],
+      "quiz": [
+        { "question": "What is the technical time complexity for a lookup in a standard Python dictionary?", "options": ["O(n)", "O(1) Average Case", "O(log n)", "O(n^2)"], "answer": "O(1) Average Case" },
+        { "question": "Which method is technically safest for accessing a dictionary key that might not exist?", "options": ["d['key']", "d.get('key')", "d.fetch('key')", "d.retrieve('key')"], "answer": "d.get('key')" },
+        { "question": "Which method is used to add an item to the end of a list technically?", "options": ["push()", "add()", "append()", "extend()"], "answer": "append()" },
+        { "question": "Are Python lists technically ordered or unordered sequences?", "options": ["Ordered (Preserve insertion order)", "Randomly shuffled", "Sorted by value", "None"], "answer": "Ordered (Preserve insertion order)" },
+        { "question": "What does the dict.items() method technically return?", "options": ["List of keys", "List of values", "Dynamic view object of (key, value) pairs", "String representation"], "answer": "Dynamic view object of (key, value) pairs" },
+        { "question": "The 'in' keyword for membership checks performs which operation on a dict?", "options": ["Checks both keys and values", "Checks keys only", "Checks values only", "Validates syntax"], "answer": "Checks keys only" },
+        { "question": "The list.sort() method modifies the list in which technical way?", "options": ["Returns a new sorted list", "Modifies the existing list IN-PLACE", "Changes the list into a dictionary", "Encrypts the data"], "answer": "Modifies the existing list IN-PLACE" },
+        { "question": "What is the result of using pop() on a list without an index?", "options": ["Removes the first item", "Removes and returns the LAST item", "Clears the list", "Syntax Error"], "answer": "Removes and returns the LAST item" },
+        { "question": "Are dictionary keys required to be unique within a single dictionary?", "options": ["Yes, duplicates will overwrite", "No, duplicates are nested", "Only for integers", "Only in Python 2.x"], "answer": "Yes, duplicates will overwrite" },
+        { "question": "The dict.clear() method performs which technical action?", "options": ["Deletes the entire variable", "Removes all elements but keeps the object", "Resets keys to integers", "None"], "answer": "Removes all elements but keeps the object" }
+      ]
+    },
+    "medium": {
+      "transcript": "Tuples & Sets.",
+      "notes": [
+        { "heading": "01: Tuples (Read-Only)", "paragraphs": ["Immutable sequences.", "```python\nt = (1, 2)```"] },
+        { "heading": "02: Unpacking", "paragraphs": ["Destructuring logic.", "```python\nx, y = (1, 2)```"] },
+        { "heading": "03: Sets (De-duping)", "paragraphs": ["Unique hash objects.", "```python\ns = {1, 2, 2} # {1,2}```"] },
+        { "heading": "04: Set Math (&, |)", "paragraphs": ["Union and Intersect.", "```python\ns1 & s2 # Intersection```"] },
+        { "heading": "05: Packing *args", "paragraphs": ["Variable collecting.", "```python\ndef f(*a): ...```"] },
+        { "heading": "06: Tuple as Key", "paragraphs": ["Immutable hence hashable.", "```python\nd = {(1,2): 'val'}```"] },
+        { "heading": "07: Frozenset", "paragraphs": ["Immutable set objects.", "```python\nfs = frozenset([1, 2])```"] },
+        { "heading": "08: Lexicographical comp", "paragraphs": ["Sequence order logic.", "```python\n(1,1) < (1,2) # True```"] }
+      ],
+      "quiz": [
+        { "question": "What is the primary technical difference between a Tuple and a List?", "options": ["Tuples are mutable; lists are not", "Tuples are immutable sequences", "Tuples are limited to 2 items", "None"], "answer": "Tuples are immutable sequences" },
+        { "question": "Which syntax correctly performs 'unpacking' on the tuple (10, 20)?", "options": ["x, y = (10, 20)", "(x, y).load(10, 20)", "set(x, y) = 10, 20", "None"], "answer": "x, y = (10, 20)" },
+        { "question": "What is the defining technical behavior of a Python Set?", "options": ["Maintains strict ordering", "Ensures all elements are unique (uniqueness)", "Enables integer sorting", "Allows duplicate keys"], "answer": "Ensures all elements are unique (uniqueness)" },
+        { "question": "The & operator performs which set operation in Python?", "options": ["Union", "Intersection", "Difference", "Symmetric Difference"], "answer": "Intersection" },
+        { "question": "The | operator performs which set operation in Python?", "options": ["Union", "Intersection", "Subtraction", "Encryption"], "answer": "Union" },
+        { "question": "Can a Tuple be used as a dictionary key technically?", "options": ["Yes, because it is immutable (hashable)", "No, only strings are keyed", "Only if it contains integers", "None"], "answer": "Yes, because it is immutable (hashable)" },
+        { "question": "What is a 'frozenset' technically in Python?", "options": ["A set that is sorted", "An immutable version of a set object", "A set containing binary data", "A temporary set"], "answer": "An immutable version of a set object" },
+        { "question": "Sequence comparison (e.g. (1,1) < (1,2)) is performed using which logic?", "options": ["Length comparison", "Lexicographical (item by item)", "Summing weights", "None"], "answer": "Lexicographical (item by item)" },
+        { "question": "Why are tuples technically faster than lists in Python?", "options": ["Dedicated memory optimization/static size", "Compressed byte storage", "Parallel compilation", "None"], "answer": "Dedicated memory optimization/static size" },
+        { "question": "What happens if you try to add a duplicate value into a Set?", "options": ["Causes an Exception", "Overwrite only if higher value", "Ignored: Set maintains uniqueness", "Duplicates are allowed"], "answer": "Ignored: Set maintains uniqueness" }
+      ]
+    },
+    "hard": {
+      "transcript": "Expert Collections.",
+      "notes": [
+        { "heading": "01: namedtuple", "paragraphs": ["Attribute access records.", "```python\nP = namedtuple('P', ['x'])```"] },
+        { "heading": "02: deque", "paragraphs": ["O(1) both ends.", "```python\nfrom collections import deque```"] },
+        { "heading": "03: heapq", "paragraphs": ["Min-heap task logic.", "```python\nimport heapq```"] },
+        { "heading": "04: Counter", "paragraphs": ["Instant frequency check.", "```python\nfrom collections import Counter```"] },
+        { "heading": "05: defaultdict", "paragraphs": ["Auto-KV initialization.", "```python\nfrom collections import defaultdict```"] },
+        { "heading": "06: bisect", "paragraphs": ["Binary sorted insert.", "```python\nimport bisect```"] },
+        { "heading": "07: OrderedDict", "paragraphs": ["Legacy order preservation.", "```python\nfrom collections import OrderedDict```"] },
+        { "heading": "08: memoryview", "paragraphs": ["Zero-copy binary buffers.", "```python\nmv = memoryview(b'A')```"] }
+      ],
+      "quiz": [
+        { "question": "What is the technical time complexity for a popleft() operation in a deque?", "options": ["O(n)", "O(1)", "O(log n)", "O(n^2)"], "answer": "O(1)" },
+        { "question": "By default, the heapq module implements which type of data structure?", "options": ["Min-heap", "Max-heap", "Standard Queue", "Circular Buffer"], "answer": "Min-heap" },
+        { "question": "What is the primary technical use of the Counter class?", "options": ["Measuring execution time", "Calculating frequency of elements", "Indexing large lists", "None"], "answer": "Calculating frequency of elements" },
+        { "question": "How does a defaultdict(list) handle a missing key access?", "options": ["Raises a KeyError", "Automatically initializes it with an empty list", "Returns None", "Deletes the dict"], "answer": "Automatically initializes it with an empty list" },
+        { "question": "The bisect module is specifically optimized for which data set?", "options": ["Unordered lists", "Sorted lists", "Dictionaries of integers", "Strings of data"], "answer": "Sorted lists" },
+        { "question": "What is the key advantage of a namedtuple over a standard tuple?", "options": ["Mutable contents", "Attribute-style field access by name", "Encryption", "Faster sorting"], "answer": "Attribute-style field access by name" },
+        { "question": "The 'memoryview' object allows for which professional operation?", "options": ["Zero-copy access to binary data buffers", "Increasing available RAM", "Scanning CPU registers", "None"], "answer": "Zero-copy access to binary data buffers" },
+        { "question": "Standard lists have O(n) performance for which specific task?", "options": ["Appending to the end", "Inserting/Deleting at index 0 (the start)", "Accessing by index", "Sorting"], "answer": "Inserting/Deleting at index 0 (the start)" },
+        { "question": "A Priority Queue is best implemented in Python using which tool?", "options": ["List.sort()", "heapq", "deque", "dict"], "answer": "heapq" },
+        { "question": "In Python 3.7+, are standard dictionaries technically ordered?", "options": ["Yes, they preserve insertion order", "No, they are randomly hashed", "Only for integer keys", "Only in admin mode"], "answer": "Yes, they preserve insertion order" }
+      ]
+    }
+  },
+  "Functional Programming & Modules": {
+    "easy": {
+      "transcript": "Functions & Standard Mods.",
+      "notes": [
+        { "heading": "01: Reusable Logic (def)", "paragraphs": ["The D.R.Y principle.", "```python\ndef f(x): return x```"] },
+        { "heading": "02: Default Args", "paragraphs": ["Flexibility with defaults.", "```python\ndef add(a, b=10): ...```"] },
+        { "heading": "03: Positional/Keyword", "paragraphs": ["Order vs Name clarities.", "```python\nf(a=1, b=2)```"] },
+        { "heading": "04: Std Lib imports", "paragraphs": ["math, random, sys usage.", "```python\nimport math```"] },
+        { "heading": "05: Modular from/import", "paragraphs": ["Extracting specific tools.", "```python\nfrom math import sqrt```"] },
+        { "heading": "06: Scope Hierarchy", "paragraphs": ["Local vs Global logic.", "```python\nx = 1; def f(): x=0```"] },
+        { "heading": "07: Implicit None", "paragraphs": ["Default return status.", "```python\ndef f(): pass # Returns None```"] },
+        { "heading": "08: Docstrings", "paragraphs": ["Professional headers.", "```python\ndef f(): \"\"\"Specs\"\"\"```"] }
+      ],
+      "quiz": [
+        { "question": "What does the D.R.Y acronym stand for in professional programming?", "options": ["Data Rules Yearly", "Don't Repeat Yourself", "Do Read Yields", "None"], "answer": "Don't Repeat Yourself" },
+        { "question": "In the function def f(a, b=10): what is 'b' technically?", "options": ["A required argument", "A default parameter (optional)", "A global constant", "A local alias"], "answer": "A default parameter (optional)" },
+        { "question": "What is the technical impact of a function having no 'return' statement?", "options": ["Causes a crash", "It implicitly returns None", "It returns the last calculated variable", "It returns 0"], "answer": "It implicitly returns None" },
+        { "question": "The syntax 'from math import sqrt' provides which technical benefit?", "options": ["Importing the full library", "Namespace isolation (importing only needed tool)", "Encryption", "Faster square root calculation"], "answer": "Namespace isolation (importing only needed tool)" },
+        { "question": "In scope hierarchy, if a function has a local variable 'x', what happens to a global 'x'?", "options": ["The global x is edited", "The local x shadows the global x", "Syntax Error occurrs", "Global x is deleted"], "answer": "The local x shadows the global x" },
+        { "question": "What is the role of docstrings in professional function definitions?", "options": ["Improving speed", "Providing built-in documentation (__doc__)", "Increasing memory size", "None"], "answer": "Providing built-in documentation (__doc__)" },
+        { "question": "How can a Python function technically return multiple values?", "options": ["It can't (only one allowed)", "By returning a single Tuple of values", "By using multiple return statements", "None"], "answer": "By returning a single Tuple of values" },
+        { "question": "Which of the following is NOT part of the Python Standard Library?", "options": ["math", "random", "react.js", "sys"], "answer": "react.js" },
+        { "question": "Position-only arguments are strictly enforced based on which property?", "options": ["Order of parameters", "Variable name match", "Type match", "Memory ID"], "answer": "Order of parameters" },
+        { "question": "math.sqrt(16) result is returned as which technical type?", "options": ["int", "float", "complex", "None"], "answer": "float" }
+      ]
+    },
+    "medium": {
+      "transcript": "Functional Intermediates.",
+      "notes": [
+        { "heading": "01: Lambda Anonymous", "paragraphs": ["Single-line logic blocks.", "```python\nL = lambda x: x*2```"] },
+        { "heading": "02: map() mapping", "paragraphs": ["Logic across iterables.", "```python\nlist(map(lambda x: x, L))```"] },
+        { "heading": "03: filter() logic", "paragraphs": ["Conditional pruning.", "```python\nlist(filter(lambda x: x>0, L))```"] },
+        { "heading": "04: *args packing", "paragraphs": ["Positional collectors.", "```python\ndef f(*args): ...```"] },
+        { "heading": "05: **kwargs packing", "paragraphs": ["Named collectors.", "```python\ndef f(**kw): ...```"] },
+        { "heading": "06: functools.reduce", "paragraphs": ["Sequence accumulation.", "```python\nreduce(lambda a,b: a+b, L)```"] },
+        { "heading": "07: First-Class objects", "paragraphs": ["Functions as variables.", "```python\ng = my_function```"] },
+        { "heading": "08: __init__.py role", "paragraphs": ["Directory into Package.", "```python\n# __init__.py needed```"] }
+      ],
+      "quiz": [
+        { "question": "What is the technical definition of a Lambda function in Python?", "options": ["A multi-line closure", "A single-line anonymous function limited to an expression", "A specialized loop keyword", "A data encryption tool"], "answer": "A single-line anonymous function limited to an expression" },
+        { "question": "Internal to a function, what is the technical type of the *args object?", "options": ["List", "Tuple", "Dictionary", "String"], "answer": "Tuple" },
+        { "question": "What does the **kwargs parameter technically collect?", "options": ["Positional arguments", "Arbitrary keyword (named) arguments in a dictionary", "Only integer values", "Only string values"], "answer": "Arbitrary keyword (named) arguments in a dictionary" },
+        { "question": "The map(function, iterable) tool returns which specific object?", "options": ["A populated list", "An iterator that applies function logic lazily", "A single value", "None"], "answer": "An iterator that applies function logic lazily" },
+        { "question": "The filter() tool accepts which type of function as its first argument?", "options": ["A recursive function", "A predicate function (returns True/False)", "A mathematical sum", "None"], "answer": "A predicate function (returns True/False)" },
+        { "question": "In Python 3.x, where is the reduce() function technically located?", "options": ["Standard built-ins", "functools module", "itertools module", "math module"], "answer": "functools module" },
+        { "question": "Functions are 'First-Class Objects' which technically means which of the following?", "options": ["They execute before variables", "They can be passed as arguments and assigned to variables", "They require high memory priority", "None"], "answer": "They can be passed as arguments and assigned to variables" },
+        { "question": "What is the technical requirement to treat a folder as a Python Package?", "options": ["Must contain a main.py", "Must contain an __init__.py file", "Must be smaller than 1MB", "None"], "answer": "Must contain an __init__.py file" },
+        { "question": "What is a Higher-Order Function technically?", "options": ["A function that processes integers", "A function that takes or returns another function", "A recursive function", "None"], "answer": "A function that takes or returns another function" },
+        { "question": "Can a Lambda function technically contain multiple statements or a print() block?", "options": ["No, it must be a single expression", "Yes, using semicolons", "Only in medium complexity", "None"], "answer": "No, it must be a single expression" }
+      ]
+    },
+    "hard": {
+      "transcript": "Expert Functional Concepts.",
+      "notes": [
+        { "heading": "01: Closures Persistence", "paragraphs": ["Memory of outer scopes.", "```python\ndef outer(x): return lambda y: x+y```"] },
+        { "heading": "02: Decorator wrapping", "paragraphs": ["Extending behavior (@syntax).", "```python\n@my_decorator```"] },
+        { "heading": "03: functools.wraps", "paragraphs": ["Preserving metadata.", "```python\n@wraps(f)```"] },
+        { "heading": "04: nonlocal keyword", "paragraphs": ["Outer-enclosed scope edit.", "```python\nnonlocal x; x += 1```"] },
+        { "heading": "05: Class callables", "paragraphs": ["__call__ implementation.", "```python\ndef __call__(self): ...```"] },
+        { "heading": "06: @property managed", "paragraphs": ["Getter/Setter attributes.", "```python\n@property```"] },
+        { "heading": "07: Context Managers", "paragraphs": ["yield for 'with' blocks.", "```python\nfrom contextlib import ...```"] },
+        { "heading": "08: Currying Partial", "paragraphs": ["functools.partial usage.", "```python\np = partial(f, 1)```"] }
+      ],
+      "quiz": [
+        { "question": "What is the technical prerequisite for creating a 'Closure' in Python?", "options": ["Global variable access", "Nested function retaining access to an outer scope variable", "A database connection", "None"], "answer": "Nested function retaining access to an outer scope variable" },
+        { "question": "A Python Decorator (@syntax) is technically an implementation of what?", "options": ["The Wrapper pattern to augment function behavior", "A binary compiler flag", "The Singleton pattern", "Data encryption"], "answer": "The Wrapper pattern to augment function behavior" },
+        { "question": "Why is @functools.wraps(f) essential when writing a custom decorator?", "options": ["Increasing execution speed", "Preserving the original function's metadata (__name__, docstrings)", "Allowing multiple arguments", "None"], "answer": "Preserving the original function's metadata (__name__, docstrings)" },
+        { "question": "The 'nonlocal' keyword performs which specific task technically?", "options": ["Accessing global variables", "Modifying variables in the nearest biological outer scope", "Creating local variables only", "Deleting memory"], "answer": "Modifying variables in the nearest biological outer scope" },
+        { "question": "To make a class instance 'callable' like a function, which dunder method must be implemented?", "options": ["__init__", "__execute__", "__call__", "__run__"], "answer": "__call__" },
+        { "question": "The @property decorator technically transforms a method into which structure?", "options": ["A static function", "A managed attribute (Accessed like a field)", "An encrypted string", "None"], "answer": "A managed attribute (Accessed like a field)" },
+        { "question": "What is the technical advantage of using a 'Context Manager' (with statement)?", "options": ["Increasing RAM speed", "Automating resource set-up and tear-down (e.g. file closing)", "Preventing loops", "None"], "answer": "Automating resource set-up and tear-down (e.g. file closing)" },
+        { "question": "Function 'Currying' or Partial Application is implemented using which tool?", "options": ["itertools.partial", "functools.partial", "math.part", "None"], "answer": "functools.partial" },
+        { "question": "What is the 'Decorator' symbol technically in Python syntax?", "options": ["#", "!", "@", "None"], "answer": "@" },
+        { "question": "Can multiple decorators be technically 'stacked' on a single function?", "options": ["Yes, they are applied from bottom to top", "No, only one per function", "Only in Python 3.12+", "None"], "answer": "Yes, they are applied from bottom to top" }
+      ]
+    }
+  }
+}

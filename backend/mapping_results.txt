@@ -1,0 +1,20 @@
+[dotenv@17.3.1] injecting env (4) from .env -- tip: ⚙️  write to custom object with { processEnv: myObject }
+Lessons found:
+- Python Essentials & Syntax: 69cf82faa43ac770098961d7
+- Algorithmic Control Flow: 69cf82faa43ac770098961ed
+- Advanced Data Structures: 69cf82faa43ac77009896203
+- Functional Programming & Modules: 69cf82faa43ac77009896219
+
+Units found:
+- Complexity: easy, LessonId: 69cf82faa43ac770098961d7
+- Complexity: medium, LessonId: 69cf82faa43ac770098961d7
+- Complexity: hard, LessonId: 69cf82faa43ac770098961d7
+- Complexity: easy, LessonId: 69cf82faa43ac770098961ed
+- Complexity: medium, LessonId: 69cf82faa43ac770098961ed
+- Complexity: hard, LessonId: 69cf82faa43ac770098961ed
+- Complexity: easy, LessonId: 69cf82faa43ac77009896203
+- Complexity: medium, LessonId: 69cf82faa43ac77009896203
+- Complexity: hard, LessonId: 69cf82faa43ac77009896203
+- Complexity: easy, LessonId: 69cf82faa43ac77009896219
+- Complexity: medium, LessonId: 69cf82faa43ac77009896219
+- Complexity: hard, LessonId: 69cf82faa43ac77009896219

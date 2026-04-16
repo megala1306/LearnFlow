@@ -1,0 +1,13 @@
+[dotenv@17.3.1] injecting env (4) from .env -- tip: ⚙️  enable debug logging with { debug: true }
+easy new ObjectId('69cf82faa43ac770098961d7') true
+medium new ObjectId('69cf82faa43ac770098961d7') true
+hard new ObjectId('69cf82faa43ac770098961d7') true
+easy new ObjectId('69cf82faa43ac770098961ed') false
+medium new ObjectId('69cf82faa43ac770098961ed') false
+hard new ObjectId('69cf82faa43ac770098961ed') false
+easy new ObjectId('69cf82faa43ac77009896203') false
+medium new ObjectId('69cf82faa43ac77009896203') false
+hard new ObjectId('69cf82faa43ac77009896203') false
+easy new ObjectId('69cf82faa43ac77009896219') false
+medium new ObjectId('69cf82faa43ac77009896219') false
+hard new ObjectId('69cf82faa43ac77009896219') false

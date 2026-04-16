@@ -1,0 +1,104 @@
+[
+  {
+    "userId": "U1",
+    "name": "Alex Johnson",
+    "progress": "0/5 Lessons Interaction",
+    "completionRate": "0%",
+    "averageScore": "0.0",
+    "weakTopics": [],
+    "engagementLevel": "High"
+  },
+  {
+    "userId": "U2",
+    "name": "Ben Smith",
+    "progress": "0/5 Lessons Interaction",
+    "completionRate": "0%",
+    "averageScore": "0.0",
+    "weakTopics": [
+      "Core Syntax",
+      "Data Management"
+    ],
+    "engagementLevel": "Low"
+  },
+  {
+    "userId": "U3",
+    "name": "Cathy Lee",
+    "progress": "0/5 Lessons Interaction",
+    "completionRate": "0%",
+    "averageScore": "0.0",
+    "weakTopics": [],
+    "engagementLevel": "Medium"
+  },
+  {
+    "userId": "U4",
+    "name": "Dan Brown",
+    "progress": "0/5 Lessons Interaction",
+    "completionRate": "0%",
+    "averageScore": "0.0",
+    "weakTopics": [
+      "Core Syntax",
+      "Data Management"
+    ],
+    "engagementLevel": "Medium"
+  },
+  {
+    "userId": "U5",
+    "name": "Eva Garcia",
+    "progress": "0/5 Lessons Interaction",
+    "completionRate": "0%",
+    "averageScore": "0.0",
+    "weakTopics": [],
+    "engagementLevel": "High"
+  },
+  {
+    "userId": "U6",
+    "name": "Faye Wang",
+    "progress": "0/5 Lessons Interaction",
+    "completionRate": "0%",
+    "averageScore": "0.0",
+    "weakTopics": [
+      "Core Syntax",
+      "Data Management"
+    ],
+    "engagementLevel": "Low"
+  },
+  {
+    "userId": "U7",
+    "name": "George Miller",
+    "progress": "0/5 Lessons Interaction",
+    "completionRate": "0%",
+    "averageScore": "0.0",
+    "weakTopics": [],
+    "engagementLevel": "Medium"
+  },
+  {
+    "userId": "U8",
+    "name": "Hanna Davis",
+    "progress": "0/5 Lessons Interaction",
+    "completionRate": "0%",
+    "averageScore": "0.0",
+    "weakTopics": [],
+    "engagementLevel": "High"
+  },
+  {
+    "userId": "U9",
+    "name": "Ian Wright",
+    "progress": "0/5 Lessons Interaction",
+    "completionRate": "0%",
+    "averageScore": "0.0",
+    "weakTopics": [
+      "Core Syntax",
+      "Data Management"
+    ],
+    "engagementLevel": "Medium"
+  },
+  {
+    "userId": "U10",
+    "name": "Jack Wilson",
+    "progress": "0/5 Lessons Interaction",
+    "completionRate": "0%",
+    "averageScore": "0.0",
+    "weakTopics": [],
+    "engagementLevel": "Low"
+  }
+]

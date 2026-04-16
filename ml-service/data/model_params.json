@@ -1,0 +1,8 @@
+{
+    "decay_constant_k": 0.05,
+    "gamma": 0.9,
+    "alpha": 0.1,
+    "epsilon": 0.1,
+    "retention_threshold": 0.7,
+    "accuracy_threshold": 0.7
+}

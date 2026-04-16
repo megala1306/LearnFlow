@@ -1,0 +1,12 @@
+[dotenv@17.3.1] injecting env (4) from .env -- tip: ≡ƒñû agentic secret storage: https://dotenvx.com/as2
+--- ≡ƒº¬ SILENT SYNC SIMULATION START ---
+Γ£à Connected for simulation
+Γ£à Simulation User Created
+[SIM] Submitting High Score (1.0) for unit 69cf82faa43ac770098961e1...
+Γ£à ML High Score Response: {"nextDifficulty":"hard","recommendation":"next_lesson","weakTopics":[],"strengths":[],"accuracy":1}
+[32m[PASS][0m High Performance Scaling: Next difficulty set to 'hard'.
+[SIM] Submitting Low Score (0.2) for unit 69cf82faa43ac770098961e1...
+Γ£à ML Low Score Response: {"nextDifficulty":"easy","recommendation":"repeat","weakTopics":[],"strengths":[],"accuracy":0.2}
+[32m[PASS][0m Low Performance Scaling: Next difficulty 'easy' and recommendation 'repeat'.
+Γ£à Simulation Cleanup Complete
+--- ≡ƒº¬ SILENT SYNC SIMULATION COMPLETE ---

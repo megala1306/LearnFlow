@@ -1,0 +1,36 @@
+[
+  {
+    "_id": "69a71f92c325e61338425d2f",
+    "user_id": "69a71251e7355f89eed92888",
+    "learning_unit_id": "69a710f51dc1c3f772a9d3df",
+    "days_since_last_review": 0,
+    "retention_score": 1,
+    "review_action": "no_review",
+    "correctness": true,
+    "reward": 1,
+    "timestamp": "2026-03-03T17:51:14.328Z",
+    "createdAt": "2026-03-03T17:51:14.591Z",
+    "updatedAt": "2026-03-03T17:51:14.591Z",
+    "__v": 0
+  },
+  {
+    "_id": "69b1a15e2cd8feffcaef9edd",
+    "user_id": "69aeef3550db0fe04566e5e4",
+    "subject_id": "69ae90f46af2bfe64dc9c3b4",
+    "lesson_id": "69ae90f46af2bfe64dc9c3b6",
+    "learning_unit_id": "69ae90f46af2bfe64dc9c3ba",
+    "module_type": "video",
+    "complexity": "easy",
+    "time_since_last_review": 0,
+    "predicted_retention": 1,
+    "recommended_action": "no_review",
+    "rl_action": "no_review",
+    "quiz_score": 1,
+    "quiz_result": 1,
+    "reward": 1,
+    "timestamp": "2026-03-11T17:07:42.124Z",
+    "createdAt": "2026-03-11T17:07:42.129Z",
+    "updatedAt": "2026-03-11T17:07:42.129Z",
+    "__v": 0
+  }
+]

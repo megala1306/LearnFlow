@@ -1,0 +1,16 @@
+[dotenv@17.3.1] injecting env (4) from .env -- tip: ≡ƒöÉ prevent building .env in docker: https://dotenvx.com/prebuild
+--- ≡ƒöì DATABASE INTEGRITY AUDIT START ---
+Connecting to: mongodb://localhost:27017/learnflow
+Audit failed: MongoParseError: options usenewurlparser, useunifiedtopology are not supported
+    at parseOptions (C:\Users\marim\Downloads\Cap-Project\backend\node_modules\mongodb\lib\connection_string.js:272:15)
+    at new MongoClient (C:\Users\marim\Downloads\Cap-Project\backend\node_modules\mongodb\lib\mongo_client.js:67:61)
+    at NativeConnection.createClient (C:\Users\marim\Downloads\Cap-Project\backend\node_modules\mongoose\lib\drivers\node-mongodb-native\connection.js:334:14)
+    at NativeConnection.openUri (C:\Users\marim\Downloads\Cap-Project\backend\node_modules\mongoose\lib\connection.js:1075:34)
+    at Mongoose.connect (C:\Users\marim\Downloads\Cap-Project\backend\node_modules\mongoose\lib\mongoose.js:471:15)
+    at auditDatabase (C:\Users\marim\Downloads\Cap-Project\backend\audit_db.js:13:24)
+    at Object.<anonymous> (C:\Users\marim\Downloads\Cap-Project\backend\audit_db.js:93:1)
+    at Module._compile (node:internal/modules/cjs/loader:1706:14)
+    at Object..js (node:internal/modules/cjs/loader:1839:10)
+    at Module.load (node:internal/modules/cjs/loader:1441:32) {
+  errorLabelSet: Set(0) {}
+}
