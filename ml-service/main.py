@@ -198,7 +198,7 @@ def recommend_next(req: NextRecommendationRequest):
             "explanation": "Your memory stability for this topic has dropped into the 'Low' bucket. Immediate reinforcement is required.",
             "memory_status": "Critical",
             "suggested_action": str(f"Switched to {resolved_modality} modality to bypass the current cognitive blocker." if modality_switched else "Focus on this unit to prevent total information loss."),
-            "next_step": "Achieve >80% accuracy to recover stability.",
+            "next_step": "Achieve >70% accuracy to recover stability.",
             "color": "red"
         })
     elif (req.retention or 1.0) < 0.7:

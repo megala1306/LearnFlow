@@ -46,8 +46,8 @@ class RLEngine:
 
     def forgetting_curve_decision(self, retention):
         """Standard educational heuristic fallback"""
-        if retention > 0.8:
-            return 0 # No Review
+        if retention >= 0.7:
+            return 0 # No Review (70%+ is success)
         elif retention >= 0.5:
             return 1 # Light Review
         else:

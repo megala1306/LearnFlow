@@ -205,10 +205,10 @@ router.post("/submit", auth, async (req, res) => {
       let oldStability = rsEntry ? (rsEntry.stability || 1.0) : 1.0;
       let newStability = oldStability;
 
-      if (accuracy >= 0.8) {
-          newStability = oldStability * 1.5; // Exponential growth on success
-      } else if (accuracy >= 0.6) {
-          newStability = oldStability * 1.1; // Maintenance boost
+      if (accuracy >= 0.7) {
+          newStability = oldStability * 1.5; // Exponential growth on success (70%+)
+      } else if (accuracy >= 0.5) {
+          newStability = oldStability * 1.1; // Maintenance boost (50-70%)
       } else {
           newStability = 1.0; // Reset on failure
       }
