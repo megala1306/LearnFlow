@@ -285,7 +285,8 @@ router.get('/user-intelligence/:userId', auth, async (req, res) => {
         let rlVitals = null;
         try {
             const mlServiceUrl = process.env.ML_SERVICE_URL || 'http://localhost:8000';
-            console.log(`[ADMIN-INTEL] Calling ML Service at ${mlServiceUrl}/get-state-vitals`);
+            console.log(`[ADMIN-INTEL] Calling ML Service at ${mlServiceUrl}/get-state-vitals (User: ${user.name})`);
+            
             const vitalsRes = await axios.post(`${mlServiceUrl}/get-state-vitals`, {
                 retention: user.retention_score ?? 0.8,
                 time_since_review: latest.time_since_last_review ?? 0,
@@ -293,11 +294,13 @@ router.get('/user-intelligence/:userId', auth, async (req, res) => {
                 last_quiz_score: latest.quiz_result ?? 0.7,
                 last_content_type: latest.actual_modality || latest.module_type || 'read_write',
                 engagement_level: 1 // Default to active for admin view
-            });
+            }, { timeout: 30000 }); // 30s timeout for cold starts
+
             rlVitals = vitalsRes.data;
-            console.log(`[ADMIN-INTEL] ML Service Vitals successfully fetched`);
+            console.log(`[ADMIN-INTEL] ML Service Vitals successfully fetched for ${user.name}`);
         } catch (mlErr) {
-            console.error('[ADMIN-INTEL] ML Service Vitals failed:', mlErr.message);
+            console.error(`[ADMIN-INTEL] ML Service Vitals failed for ${user.name}:`, mlErr.message);
+            if (mlErr.code === 'ECONNABORTED') console.error('[ADMIN-INTEL] Service timed out (Cold Start?)');
             // Don't fail the whole route, just proxy a null vital
         }
 

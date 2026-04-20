@@ -350,20 +350,38 @@ router.post('/record', auth, async (req, res) => {
         if (accuracy >= 0.8) rl_reward = 1;
         else if (accuracy >= 0.5) rl_reward = 0.5;
 
-        // Send feedback to ML Service to update Q-table
+        // Send feedback to ML Service to update Q-table (Timing Engine + Content Engine)
         try {
-            await axios.post(`${process.env.ML_SERVICE_URL || 'http://localhost:8000'}/update-model`, {
+            const mlUrl = process.env.ML_SERVICE_URL || 'http://localhost:8000';
+            
+            // 1. Update Timing Engine (forgetting curve)
+            await axios.post(`${mlUrl}/update-q`, {
                 retention: retention,
                 days_since_last_review: days,
                 complexity: unit.complexity,
-                action: rl_action,
+                action: rl_action === 'no_review' ? 0 : (rl_action === 'light_review' ? 1 : 2),
                 reward: rl_reward,
-                next_retention: retention, // Approximation for now
-                next_days_since_last_review: 0,
+                next_retention: retention, // Approximation
+                next_days: 0,
                 next_complexity: unit.complexity
-            });
+            }, { timeout: 30000 });
+
+            // 2. Update Content Modality Engine (VARK preference)
+            const engagement_level = accuracy >= 0.5 ? 1 : 0;
+            await axios.post(`${mlUrl}/update-content-q`, {
+                retention: retention,
+                last_quiz_score: lastInteraction?.quiz_result || 0.7,
+                last_content_type: lastInteraction?.actual_modality || 'read_write',
+                engagement_level: engagement_level,
+                actual_content_used: modality || module.module_type,
+                reward: rl_reward,
+                next_retention: adjustedRetention,
+                next_quiz_score: accuracy
+            }, { timeout: 30000 });
+
+            console.log(`[ML-SYNC] Successfully synchronized both AI engines for user: ${user.name}`);
         } catch (mlErr) {
-            console.error("[ML-SYNC] Failed to update RL model:", mlErr.message);
+            console.error("[ML-SYNC] Failed to update RL models:", mlErr.message);
         }
 
         const { updateXP, updateStreak } = require('../services/gamification');
@@ -510,10 +528,11 @@ router.delete('/:id', [auth, admin], async (req, res) => {
 // Helper: estimate retention synchronously
 async function getRetention(days, k) {
     try {
-        const res = await axios.post(`${process.env.ML_SERVICE_URL}/estimate-retention`, {
+        const mlUrl = process.env.ML_SERVICE_URL || 'http://localhost:8000';
+        const res = await axios.post(`${mlUrl}/estimate-retention`, {
             days_since_last_review: days,
             k: k || 0.1
-        });
+        }, { timeout: 30000 });
         return res.data.retention;
     } catch {
         return 1.0;

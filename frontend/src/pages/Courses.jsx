@@ -110,8 +110,8 @@ const Courses = () => {
             <div className="flex-1 overflow-y-auto bg-slate-50/30 relative">
                 
                 {/* HUD STATUS BAR (SLIM) */}
-                <header className="sticky top-0 z-40 h-24 bg-white/80 backdrop-blur-xl border-b border-slate-100 px-12 flex items-center justify-between">
-                    <div className="flex items-center space-x-10">
+                <header className="sticky top-0 z-40 h-24 bg-white/80 backdrop-blur-xl border-b border-slate-100 px-6 lg:px-12 flex items-center justify-between">
+                    <div className="flex items-center space-x-4 lg:space-x-10">
                          <div className="flex flex-col"><p className="text-[8px] font-bold text-emerald-600 uppercase tracking-widest mb-1 opacity-70 leading-none">Status</p><h2 className="text-xl font-bold text-slate-900 uppercase tracking-tight">Curriculum</h2></div>
                          <div className="w-px h-8 bg-slate-100" />
                          {/* REFINED METRICS */}
@@ -128,7 +128,7 @@ const Courses = () => {
                     </div>
                 </header>
 
-                <div className="p-10 lg:p-16 max-w-[1500px] mx-auto space-y-16">
+                <div className="p-6 lg:p-16 max-w-[1500px] mx-auto space-y-10 lg:space-y-16">
                     
                     {/* REFINED HERO GRID */}
                     <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-12">
@@ -182,6 +182,31 @@ const Courses = () => {
                     )}
                 </div>
             </div>
+            
+            {/* MOBILE BOTTOM NAV */}
+            <div className="lg:hidden fixed bottom-0 left-0 w-full bg-white border-t border-slate-100 flex items-center justify-around py-4 pb-6 z-50 shadow-[0_-10px_40px_-15px_rgba(0,0,0,0.1)]">
+                <button onClick={() => navigate('/dashboard')} className="flex flex-col items-center text-slate-400 hover:text-emerald-600 transition-colors">
+                    <LayoutDashboard className="w-5 h-5 mb-1" />
+                    <span className="text-[7px] font-bold uppercase tracking-tighter">Home</span>
+                </button>
+                <button onClick={() => navigate('/courses')} className="flex flex-col items-center text-emerald-600 transition-colors">
+                    <BookOpen className="w-5 h-5 mb-1" />
+                    <span className="text-[7px] font-bold uppercase tracking-tighter">Grid</span>
+                </button>
+                <button onClick={() => navigate('/schedule')} className="flex flex-col items-center text-slate-400 hover:text-emerald-600 transition-colors">
+                    <Calendar className="w-5 h-5 mb-1" />
+                    <span className="text-[7px] font-bold uppercase tracking-tighter">Schedule</span>
+                </button>
+                <button onClick={() => navigate('/analytics')} className="flex flex-col items-center text-slate-400 hover:text-emerald-600 transition-colors">
+                    <BarChart3 className="w-5 h-5 mb-1" />
+                    <span className="text-[7px] font-bold uppercase tracking-tighter">Flow</span>
+                </button>
+                 <button onClick={logout} className="flex flex-col items-center text-rose-400 hover:text-rose-600 transition-colors">
+                    <LogOut className="w-5 h-5 mb-1" />
+                    <span className="text-[7px] font-bold uppercase tracking-tighter">Exit</span>
+                </button>
+            </div>
+            
         </div>
     );
 };

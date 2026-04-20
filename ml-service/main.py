@@ -125,6 +125,7 @@ class NextRecommendationRequest(BaseModel):
     preferred_complexity: str = "medium"
     is_new_user: bool = False
     retention: float = 1.0
+    days_since_last_review: float = 1.0
     error: float = 0.0
     k: float = None
 
@@ -154,7 +155,7 @@ def recommend_next(req: NextRecommendationRequest):
         # NEW USER: strictly respect preference, no changes
         resolved_modality = req.preferred_style
     else:
-        rl_result = engine.select_action(req.retention, 1.0, req.last_complexity)
+        rl_result = engine.select_action(req.retention, req.days_since_last_review, req.last_complexity)
         actions = ['no_review', 'light_review', 'immediate_review']
         rl_action = actions[rl_result["action"]]
 
@@ -162,8 +163,7 @@ def recommend_next(req: NextRecommendationRequest):
             resolved_modality = None # No content recommended
         else:
             # Use secondary RL agent for content format selection
-            engagement_level = 1 if req.quiz_result >= 0.5 else 0
-            resolved_modality, reason = content_engine.get_content_type(req.retention, req.quiz_result, req.last_modality, engagement_level)
+            resolved_modality, reason = content_engine.get_content_type(req.retention, req.days_since_last_review)
             modality_switched = resolved_modality != req.preferred_style
             selection_logic = reason
     
@@ -191,36 +191,37 @@ def recommend_next(req: NextRecommendationRequest):
             "next_step": "Finish lesson + quiz to see your first metrics.",
             "color": "blue"
         })
-    elif (req.retention or 1.0) < 0.6:
+    elif (req.retention or 1.0) < 0.5:
         xai_report.update({
             "status": "critical",
-            "label": "Immediate Repair",
-            "explanation": "Your understanding has dropped below the safety threshold. Immediate reinforcement is required.",
+            "label": "Critical Decay",
+            "explanation": "Your memory stability for this topic has dropped into the 'Low' bucket. Immediate reinforcement is required.",
             "memory_status": "Critical",
-            "suggested_action": str(f"Switched to {resolved_modality} to use a different mental pathway for repair." if modality_switched else "Focus on this unit to prevent total information loss."),
-            "next_step": "Consistent high scores will reduce review frequency.",
+            "suggested_action": str(f"Switched to {resolved_modality} modality to bypass the current cognitive blocker." if modality_switched else "Focus on this unit to prevent total information loss."),
+            "next_step": "Achieve >80% accuracy to recover stability.",
             "color": "red"
         })
-    elif (req.retention or 1.0) < 0.8:
+    elif (req.retention or 1.0) < 0.7:
         xai_report.update({
             "status": "moderate",
-            "label": "Light Refresh",
-            "explanation": "Your understanding is moderate but fading. A brief reinforcement session is recommended.",
+            "label": "Moderate Stability",
+            "explanation": "Your understanding is in the 'Medium' bucket. A refresh session will prevent further decay.",
             "memory_status": "Moderate",
-            "suggested_action": "A brief refresh will help strengthen your neural stability.",
-            "next_step": "Improve your score to unlock faster progression.",
+            "suggested_action": "A brief refresh will stabilize your knowledge for the mid-term window.",
+            "next_step": "Improve your score to reach high stability.",
             "color": "orange"
         })
     else:
         xai_report.update({
             "status": "stable",
-            "label": "Deep Mastery",
-            "explanation": "You have achieved high neural stability in this topic.",
+            "label": "High Stability",
+            "explanation": "You have achieved high neural stability and long-term retention in this topic.",
             "memory_status": "Optimal",
-            "suggested_action": "The AI is now focusing on long-term edge retention calibration.",
-            "next_step": "You are ready for the next milestone.",
+            "suggested_action": "The AI is maintaining your knowledge at an optimal level.",
+            "next_step": "You are ready for more complex challenges.",
             "color": "emerald"
         })
+
 
     # Adjust for prediction error feedback (XAI Transparency)
     if not req.is_new_user:
@@ -301,20 +302,22 @@ def get_state_vitals(req: StateVitalsRequest):
     content_q = content_engine.q_table.get(content_state, [0.0, 0.0, 0.0, 0.0])
     if isinstance(content_q, np.ndarray): content_q = content_q.tolist()
 
-    # 3. Global Strategy Matrix (Strategic Trend)
+    # 3. Global Strategy Matrix (3x3 Research View)
     strategy_matrix = []
     # Probe levels: 0.3 (Low), 0.6 (Med), 0.9 (High)
-    for q_level_probe in [0.3, 0.6, 0.9]:
-        probe_state = content_engine.get_state_key(req.retention, q_level_probe, req.last_content_type, req.engagement_level)
-        probe_q = content_engine.q_table.get(probe_state, [0.0, 0.0, 0.0, 0.0])
-        if isinstance(probe_q, np.ndarray): probe_q = probe_q.tolist()
-        best_action_idx = int(np.argmax(probe_q))
-        strategy_matrix.append({
-            "accuracy_level": "Low" if q_level_probe < 0.5 else "Medium" if q_level_probe < 0.8 else "High",
-            "scores": probe_q,
-            "recommended": ["Read/Write", "Video", "Audio", "Kinesthetic"][best_action_idx],
-            "best_idx": best_action_idx
-        })
+    for r_level_probe in [0.3, 0.6, 0.9]:
+        for t_level_probe in [2, 7, 15]: # Short, Mid, Long
+            probe_state = content_engine.get_state_key(r_level_probe, t_level_probe)
+            probe_q = content_engine.q_table.get(probe_state, [0.0, 0.0, 0.0, 0.0])
+            if isinstance(probe_q, np.ndarray): probe_q = probe_q.tolist()
+            best_action_idx = int(np.argmax(probe_q))
+            strategy_matrix.append({
+                "retention_bucket": "Low" if r_level_probe < 0.5 else "Medium" if r_level_probe < 0.7 else "High",
+                "time_bucket": "Short" if t_level_probe <= 3 else "Mid" if t_level_probe <= 10 else "Long",
+                "scores": probe_q,
+                "recommended": ["Read/Write", "Video", "Audio", "Kinesthetic"][best_action_idx],
+                "best_idx": best_action_idx
+            })
 
     return {
         "timing": {

@@ -40,6 +40,7 @@ const userSchema = new mongoose.Schema({
             last_reviewed: { type: Date, default: Date.now },
             next_review: { type: Date, required: true },
             retention: { type: Number },
+            stability: { type: Number, default: 1.0 },
             review_type: { type: String, enum: ['no_review', 'light_review', 'immediate_review'] },
             complexity: { type: String, enum: ['easy', 'medium', 'hard'] },
             

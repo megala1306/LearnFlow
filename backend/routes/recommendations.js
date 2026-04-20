@@ -31,17 +31,19 @@ router.get('/next', auth, async (req, res) => {
             ? (Date.now() - new Date(lastInteraction.timestamp)) / (1000 * 60 * 60 * 24)
             : 0;
 
+        const mlUrl = process.env.ML_SERVICE_URL || 'http://localhost:8000';
+
         const [retentionRes, actionRes] = await Promise.all([
-            axios.post(`${process.env.ML_SERVICE_URL}/estimate-retention`, {
+            axios.post(`${mlUrl}/estimate-retention`, {
                 days_since_last_review: daysSinceLast,
                 k: user.forgetting_rate || 0.1
-            }),
-            axios.post(`${process.env.ML_SERVICE_URL}/select-action`, {
+            }, { timeout: 30000 }),
+            axios.post(`${mlUrl}/select-action`, {
                 retention: lastInteraction ? await getRetention(daysSinceLast, user.forgetting_rate) : 1.0,
                 days_since_last_review: daysSinceLast,
                 complexity: lastInteraction?.complexity || 'easy',
                 k: user.forgetting_rate || 0.1
-            })
+            }, { timeout: 30000 })
         ]);
 
         const predictedRetention = retentionRes.data.retention;
@@ -66,7 +68,8 @@ router.get('/next', auth, async (req, res) => {
         const currentError = lastAccuracy - lastPrediction;
 
         try {
-            const mlRecommendation = await axios.post(`${process.env.ML_SERVICE_URL}/recommend-next`, {
+            const mlUrl = process.env.ML_SERVICE_URL || 'http://localhost:8000';
+            const mlRecommendation = await axios.post(`${mlUrl}/recommend-next`, {
                 last_complexity: lastInteraction?.complexity || 'easy',
                 last_modality: lastInteraction?.module_type || 'read_write',
                 quiz_result: lastAccuracy,
@@ -75,7 +78,7 @@ router.get('/next', auth, async (req, res) => {
                 retention: predictedRetention,
                 error: currentError,
                 k: user.forgetting_rate || 0.1
-            });
+            }, { timeout: 30000 });
 
             targetComplexity = mlRecommendation.data.recommended_complexity;
             xaiReport = mlRecommendation.data.xai_report;
@@ -204,10 +207,11 @@ router.get('/next', auth, async (req, res) => {
 // Helper: estimate retention synchronously
 async function getRetention(days, k) {
     try {
-        const res = await axios.post(`${process.env.ML_SERVICE_URL}/estimate-retention`, {
+        const mlUrl = process.env.ML_SERVICE_URL || 'http://localhost:8000';
+        const res = await axios.post(`${mlUrl}/estimate-retention`, {
             days_since_last_review: days,
             k: k || 0.1
-        });
+        }, { timeout: 30000 });
         return res.data.retention;
     } catch {
         return 1.0;

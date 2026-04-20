@@ -200,11 +200,31 @@ router.post("/submit", auth, async (req, res) => {
       user.xp_points = (user.xp_points || 0) + xpGained;
 
       let rsEntry = user.revisionSchedule.find(rs => rs.unit_id.toString() === unitId);
-      const nextReviewDate = accuracy < 0.8 ? new Date() : new Date(Date.now() + 24 * 60 * 60 * 1000);
+      
+      // --- DYNAMIC NEURAL STABILITY ENGINE ---
+      let oldStability = rsEntry ? (rsEntry.stability || 1.0) : 1.0;
+      let newStability = oldStability;
+
+      if (accuracy >= 0.8) {
+          newStability = oldStability * 1.5; // Exponential growth on success
+      } else if (accuracy >= 0.6) {
+          newStability = oldStability * 1.1; // Maintenance boost
+      } else {
+          newStability = 1.0; // Reset on failure
+      }
+
+      // Cap stability at 30.0 (Maximum 1 month interval between reviews)
+      newStability = Math.min(30, newStability);
+
+      // Calculate dynamic review interval (in milliseconds)
+      // If accuracy is very low, prioritize immediate revisit (0 delay)
+      const intervalMs = accuracy < 0.6 ? 0 : (newStability * 24 * 60 * 60 * 1000);
+      const nextReviewDate = new Date(Date.now() + intervalMs);
 
       if (rsEntry) {
         rsEntry.complexity = nextDifficulty;
         rsEntry.retention = accuracy;
+        rsEntry.stability = newStability;
         rsEntry.next_review = nextReviewDate;
         rsEntry.last_reviewed = new Date();
         rsEntry.scoreHistory.push({ score, accuracy });
@@ -214,6 +234,7 @@ router.post("/submit", auth, async (req, res) => {
           lessonId: unit.lessonId, 
           complexity: nextDifficulty, 
           retention: accuracy, 
+          stability: newStability,
           next_review: nextReviewDate, 
           last_reviewed: new Date(),
           scoreHistory: [{ score, accuracy }] 

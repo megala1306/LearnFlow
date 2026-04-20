@@ -101,19 +101,38 @@ const TextContent = ({ data, onComplete, completed }) => {
     }
   }
 
-  const handleDownload = (e) => {
+  const handleDownload = async (e) => {
     e.stopPropagation();
     if (!notesRef.current) return;
 
-    const opt = {
-      margin: 1,
-      filename: `LearnFlow_${data.title || 'Lesson'}_Notes.pdf`,
-      image: { type: 'jpeg', quality: 0.98 },
-      html2canvas: { scale: 3, useCORS: true },
-      jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
-    };
+    try {
+      // Use standard alert for immediate feedback
+      console.log("Generating PDF...");
+      
+      const opt = {
+        margin: [0.5, 0.5], // Smaller margins for cleaner mobile feel
+        filename: `LearnFlow_${data.title?.replace(/\s+/g, '_') || 'Lesson'}_Notes.pdf`,
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { 
+          scale: 2, // Scale 2 is safer for mobile performance
+          useCORS: true,
+          logging: false,
+          letterRendering: true
+        },
+        jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+      };
 
-    html2pdf().set(opt).from(notesRef.current).save();
+      // Show alert so user knows it started
+      const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+      if (isMobile) {
+        alert("Preparing your study materials... Download will start in a moment.");
+      }
+
+      await html2pdf().set(opt).from(notesRef.current).save();
+    } catch (err) {
+      console.error("PDF Generation Error:", err);
+      alert("Note: PDF generation encountered an issue. Please try again or check permissions.");
+    }
   };
 
   return (

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import apiClient from '../api/apiClient';
+import notificationService from '../utils/notificationService';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
     LayoutDashboard, BookOpen, BarChart3, Settings, LogOut,
@@ -125,8 +126,8 @@ const Dashboard = () => {
             <div className="flex-1 overflow-y-auto bg-slate-50/30 relative">
                 
                 {/* HUD STATUS BAR (SLIM) */}
-                <header className="sticky top-0 z-40 h-24 bg-white/80 backdrop-blur-xl border-b border-slate-100 px-12 flex items-center justify-between">
-                    <div className="flex items-center space-x-10">
+                <header className="sticky top-0 z-40 h-24 bg-white/80 backdrop-blur-xl border-b border-slate-100 px-6 lg:px-12 flex items-center justify-between">
+                    <div className="flex items-center space-x-4 lg:space-x-10">
                          <div className="flex flex-col"><p className="text-[8px] font-bold text-emerald-600 uppercase tracking-widest mb-1 opacity-70 leading-none">Status</p><h2 className="text-xl font-bold text-slate-900 uppercase tracking-tight">Active</h2></div>
                          <div className="w-px h-8 bg-slate-100" />
                          {/* REFINED METRICS */}
@@ -144,10 +145,10 @@ const Dashboard = () => {
                     </div>
                 </header>
 
-                <div className="p-10 lg:p-16 max-w-6xl mx-auto space-y-16">
+                <div className="p-6 lg:p-16 max-w-6xl mx-auto space-y-10 lg:space-y-16">
                     
                     {/* QUARTZ WELCOME MODAL */}
-                    <div className="relative bg-emerald-50/40 border border-emerald-100/50 p-12 md:p-16 rounded-[2.5rem] shadow-sm overflow-hidden group">
+                    <div className="relative bg-emerald-50/40 border border-emerald-100/50 p-8 lg:p-16 rounded-[2.5rem] shadow-sm overflow-hidden group">
                         <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-white/60 blur-[100px] rounded-full" />
                         <div className="relative z-10 space-y-8">
                             <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-slate-900">Welcome Back, <span className="text-emerald-600">{user?.name ? user.name.split(' ')[0] : 'Explorer'}</span>.</h1>
@@ -155,10 +156,26 @@ const Dashboard = () => {
                                 {subjects.length > 0 ? `Currently synchronized with ${subjects.length} active knowledge nodes. Ready for next masterclass?` : "Your cognitive profile is stable. Proceed to the knowledge grid to initialize your next study session."}
                             </p>
                             <div className="flex items-center space-x-6">
-                                <button onClick={() => navigate('/courses')} className="px-10 py-5 bg-slate-900 text-white rounded-2xl font-bold text-xs uppercase tracking-widest shadow-xl hover:bg-emerald-600 transition-all flex items-center space-x-4">
-                                    <span>{subjects.length > 0 ? "Access Grid" : "Initialize Curriculum"}</span>
-                                    <ArrowRight className="w-4 h-4" />
-                                </button>
+                                <div className="flex flex-wrap gap-4">
+                                    <button onClick={() => navigate('/courses')} className="px-8 py-4 bg-slate-900 text-white rounded-[1.25rem] font-black text-xs uppercase tracking-widest hover:bg-emerald-600 transition-all shadow-xl shadow-slate-900/10 flex items-center group">
+                                        <span>Enter Lattice</span>
+                                        <ChevronRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
+                                    </button>
+                                    <button 
+                                        onClick={async () => {
+                                            const success = await notificationService.sendTestNotification();
+                                            if (success) {
+                                                alert("Test notification scheduled for 5 seconds from now! Close the app or look at your status bar.");
+                                            } else {
+                                                alert("Notice: Notification permissions were not granted. Please enable them in your phone settings.");
+                                            }
+                                        }}
+                                        className="px-8 py-4 bg-white border border-emerald-200 text-emerald-700 rounded-[1.25rem] font-black text-xs uppercase tracking-widest hover:bg-emerald-50 transition-all flex items-center space-x-2"
+                                    >
+                                        <Sparkles className="w-5 h-5" />
+                                        <span>Test Alerts</span>
+                                    </button>
+                                </div>
                                 <div className="hidden md:flex items-center space-x-3 text-emerald-600 font-bold text-[10px] uppercase tracking-widest"><Sparkles className="w-4 h-4" /><span>System Nominal</span></div>
                             </div>
                         </div>
@@ -226,7 +243,7 @@ const Dashboard = () => {
                         </div>
 
                         {/* PHASE RADAR: PERFORMANCE LINKED */}
-                        <div className="w-full lg:w-96 bg-white border border-slate-100 rounded-[2.5rem] p-10 shadow-sm relative group overflow-hidden">
+                        <div className="w-full lg:w-96 bg-white border border-slate-100 rounded-[2.5rem] p-8 lg:p-10 shadow-sm relative group overflow-hidden">
                             <div className="flex items-center justify-between mb-10 relative z-10">
                                 <div className="space-y-1">
                                     <h3 className="text-xl font-bold text-slate-900 uppercase tracking-tight">Phase Radar</h3>
@@ -285,6 +302,31 @@ const Dashboard = () => {
 
                 </div>
             </div>
+
+            {/* MOBILE BOTTOM NAV */}
+            <div className="lg:hidden fixed bottom-0 left-0 w-full bg-white border-t border-slate-100 flex items-center justify-around py-4 pb-6 z-50 shadow-[0_-10px_40px_-15px_rgba(0,0,0,0.1)]">
+                <button onClick={() => navigate('/dashboard')} className="flex flex-col items-center text-emerald-600 transition-colors">
+                    <LayoutDashboard className="w-5 h-5 mb-1" />
+                    <span className="text-[7px] font-bold uppercase tracking-tighter">Home</span>
+                </button>
+                <button onClick={() => navigate('/courses')} className="flex flex-col items-center text-slate-400 hover:text-emerald-600 transition-colors">
+                    <BookOpen className="w-5 h-5 mb-1" />
+                    <span className="text-[7px] font-bold uppercase tracking-tighter">Grid</span>
+                </button>
+                <button onClick={() => navigate('/schedule')} className="flex flex-col items-center text-slate-400 hover:text-emerald-600 transition-colors">
+                    <Calendar className="w-5 h-5 mb-1" />
+                    <span className="text-[7px] font-bold uppercase tracking-tighter">Schedule</span>
+                </button>
+                <button onClick={() => navigate('/analytics')} className="flex flex-col items-center text-slate-400 hover:text-emerald-600 transition-colors">
+                    <BarChart3 className="w-5 h-5 mb-1" />
+                    <span className="text-[7px] font-bold uppercase tracking-tighter">Flow</span>
+                </button>
+                 <button onClick={logout} className="flex flex-col items-center text-rose-400 hover:text-rose-600 transition-colors">
+                    <LogOut className="w-5 h-5 mb-1" />
+                    <span className="text-[7px] font-bold uppercase tracking-tighter">Exit</span>
+                </button>
+            </div>
+            
         </div>
     );
 };

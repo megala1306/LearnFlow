@@ -43,7 +43,9 @@ async function generateKnowledgeDensityReport() {
                 units: subUnits.length,
                 questions: subQCount,
                 avgAccuracy: subAvgAcc,
-                status: subAvgAcc < 0.6 && subInteractions.length > 0 ? "WEAK" : "STABLE"
+                status: subInteractions.length === 0 ? "NO DATA" :
+                        subAvgAcc < 0.5 ? "CRITICAL (LOW STABILITY)" :
+                        subAvgAcc < 0.7 ? "MODERATE STABILITY" : "OPTIMAL STABILITY"
             });
 
             report.totalQuestions += subQCount;

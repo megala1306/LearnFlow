@@ -12,7 +12,7 @@ export default function Assessment({ unitId, onComplete }) {
     if (!unitId) return;
 
     setLoading(true);
-    fetch(`http://localhost:5000/api/assessment/${unitId}`)
+    fetch(`https://learnflow-backend-79r2.onrender.com/api/assessment/${unitId}`)
       .then((res) => res.json())
       .then((data) => {
         console.log("Fetched questions:", data.questions);
@@ -38,7 +38,7 @@ export default function Assessment({ unitId, onComplete }) {
     setSubmitting(true);
 
     try {
-      const res = await fetch("http://localhost:5000/api/assessment/submit", {
+      const res = await fetch("https://learnflow-backend-79r2.onrender.com/api/assessment/submit", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ unitId, answers }),

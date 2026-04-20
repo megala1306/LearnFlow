@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">LearnFlow</string>
+    <string name="title_activity_main">LearnFlow</string>
+    <string name="package_name">com.learnflow.app</string>
+    <string name="custom_url_scheme">com.learnflow.app</string>
+</resources>

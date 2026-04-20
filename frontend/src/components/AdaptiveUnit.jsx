@@ -21,7 +21,7 @@ const moduleSectionsTemplate = (unit, xaiExplanation) => [
       audioUrl: unit.auditory_audio_url
         ? unit.auditory_audio_url.startsWith("http")
           ? unit.auditory_audio_url
-          : `http://localhost:5000${unit.auditory_audio_url}`
+          : `https://learnflow-backend-79r2.onrender.com${unit.auditory_audio_url}`
         : null,
       transcript: unit.auditory_transcript || unit.content_text || "",
       explanation: xaiExplanation || unit.explanation || null // XAI Insight

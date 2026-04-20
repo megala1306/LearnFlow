@@ -17,7 +17,7 @@ const AdaptiveLearning = ({ subjectId, initialPreferredType }) => {
     try {
       setIsSwitching(true);
       const token = localStorage.getItem("token");
-      let url = `http://localhost:5000/api/recommendations/next?subject_id=${subjectId}`;
+      let url = `https://learnflow-backend-79r2.onrender.com/api/recommendations/next?subject_id=${subjectId}`;
       if (type) url += `&module_type=${type}`;
 
       const res = await axios.get(url, { headers: { "x-auth-token": token } });
@@ -46,7 +46,7 @@ const AdaptiveLearning = ({ subjectId, initialPreferredType }) => {
     try {
       const token = localStorage.getItem("token");
       await axios.post(
-        "http://localhost:5000/api/units/record",
+        "https://learnflow-backend-79r2.onrender.com/api/units/record",
         { unit_id: unitId, passed, accuracy, module_type: moduleType },
         { headers: { "x-auth-token": token } }
       );

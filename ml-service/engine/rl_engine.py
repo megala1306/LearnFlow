@@ -27,24 +27,22 @@ class RLEngine:
         with open(self.q_table_path, 'wb') as f:
             pickle.dump(self.q_table, f)
 
-    def get_state_key(self, retention, time, complexity):
-        # State representation: (retention_level, time_bucket, complexity_level)
-        # 1. Retention: 0.0 to 1.0 -> 0-10 levels
-        r_level = int(retention * 10)
-        r_level = max(0, min(r_level, 10))
+    def get_state_key(self, retention, time, complexity=None):
+        # State representation: (retention_bucket, time_bucket)
+        # Unified with Academic Research (3x3 Matrix)
         
-        # 2. Time: days since last review -> buckets (0 to 4)
-        if time <= 1: t_bucket = 0
-        elif time <= 3: t_bucket = 1
-        elif time <= 7: t_bucket = 2
-        elif time <= 14: t_bucket = 3
-        else: t_bucket = 4
+        # 1. Retention Bucket
+        if retention >= 0.7: r_bucket = 2   # High Stability
+        elif retention >= 0.5: r_bucket = 1 # Medium Stability
+        else: r_bucket = 0                  # Low Stability (Critical)
         
-        # 3. Complexity: easy=0, medium=1, hard=2
-        comp_map = {'easy': 0, 'medium': 1, 'hard': 2}
-        c_level = comp_map.get(complexity, 0)
+        # 2. Time Bucket (Days since last review)
+        if time <= 3: t_bucket = 0    # Short Term
+        elif time <= 10: t_bucket = 1 # Mid Term
+        else: t_bucket = 2            # Long Term
         
-        return (r_level, t_bucket, c_level)
+        return (r_bucket, t_bucket)
+
 
     def forgetting_curve_decision(self, retention):
         """Standard educational heuristic fallback"""

@@ -171,66 +171,64 @@ const AdminDashboard = () => {
 
             <main className="max-w-6xl mx-auto px-6 py-10 space-y-10">
 
-                {/* Stats Bar */}
-                <div className="grid grid-cols-2 lg:grid-cols-5 gap-4">
-                    {[
-                        { label: 'Students', value: stats?.total_students ?? '—', icon: Users, color: 'text-blue-600', bg: 'bg-blue-50', tab: 'students' },
-                        { label: 'Fresh', value: Array.isArray(pendingUnits) ? pendingUnits.filter(u => !u.isApproved && !u.isAssessmentApproved).length : 0, icon: Clock, color: 'text-amber-600', bg: 'bg-amber-50', tab: 'approvals' },
-                        { label: 'Partial', value: Array.isArray(pendingUnits) ? pendingUnits.filter(u => (u.isApproved && !u.isAssessmentApproved) || (!u.isApproved && u.isAssessmentApproved)).length : 0, icon: Cpu, color: 'text-indigo-600', bg: 'bg-indigo-50', tab: 'partial' },
-                        { label: 'Approved', value: stats?.approved_content ?? '—', icon: CheckCircle, color: 'text-emerald-600', bg: 'bg-emerald-50', tab: 'approved' },
-                        { label: 'Avg Fidelity', value: stats?.average_fidelity ?? '—', icon: BarChart3, color: 'text-slate-600', bg: 'bg-slate-100', tab: null },
-                    ].map((s, i) => (
-                        <motion.div
-                            key={s.label}
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: i * 0.05 }}
-                            onClick={() => s.tab && setActiveTab(s.tab)}
-                            className={`bg-white border border-slate-100 rounded-2xl p-5 flex items-center space-x-4 shadow-sm transition-all ${s.tab ? 'cursor-pointer hover:border-primary-200 hover:shadow-md' : 'cursor-default'}`}
-                        >
-                            <div className={`p-3 rounded-xl ${s.bg}`}>
-                                <s.icon className={`w-5 h-5 ${s.color}`} />
-                            </div>
-                            <div>
-                                <p className="text-2xl font-black text-slate-900">{s.value}</p>
-                                <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">{s.label}</p>
-                                {s.tab && <p className="text-[9px] text-primary-500 font-black uppercase tracking-widest mt-0.5">Click to view →</p>}
-                            </div>
-                        </motion.div>
-                    ))}
-                </div>
-
-                {/* Quick Links */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <button
-                        onClick={() => navigate('/admin/analytics')}
-                        className="bg-white border border-slate-100 rounded-2xl p-5 flex items-center justify-between hover:border-primary-200 hover:shadow-md transition-all group text-left shadow-sm"
-                    >
-                        <div className="flex items-center space-x-4">
-                            <div className="p-3 rounded-xl bg-primary-50">
-                                <BarChart3 className="w-5 h-5 text-primary-600" />
-                            </div>
-                            <div>
-                                <p className="text-sm font-black text-slate-900">Analytics Dashboard</p>
-                                <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest">View learning metrics & retention</p>
-                            </div>
-                        </div>
-                        <ChevronRight className="w-5 h-5 text-slate-300 group-hover:text-primary-600 group-hover:translate-x-1 transition-all" />
-                    </button>
+                {/* Simplified Action Center */}
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                     <button
                         onClick={() => navigate('/admin/content')}
-                        className="bg-white border border-slate-100 rounded-2xl p-5 flex items-center justify-between hover:border-primary-200 hover:shadow-md transition-all group text-left shadow-sm"
+                        className="bg-white border border-slate-100 rounded-[2rem] p-8 flex flex-col items-center text-center space-y-4 hover:border-emerald-200 hover:shadow-xl transition-all group shadow-sm"
                     >
-                        <div className="flex items-center space-x-4">
-                            <div className="p-3 rounded-xl bg-indigo-50">
-                                <BookOpen className="w-5 h-5 text-indigo-600" />
-                            </div>
-                            <div>
-                                <p className="text-sm font-black text-slate-900">Manage Content</p>
-                                <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest">Add / update lessons & quizzes</p>
-                            </div>
+                        <div className="w-16 h-16 bg-emerald-50 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform">
+                            <BookOpen className="w-8 h-8 text-emerald-600" />
                         </div>
-                        <ChevronRight className="w-5 h-5 text-slate-300 group-hover:text-primary-600 group-hover:translate-x-1 transition-all" />
+                        <div>
+                            <p className="text-xl font-black text-slate-900 uppercase tracking-tight">Manage Curriculum</p>
+                            <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest mt-1">Insert / Update Lessons & Units</p>
+                        </div>
+                    </button>
+
+                    <button
+                        onClick={() => navigate('/admin/analytics')}
+                        className="bg-white border border-slate-100 rounded-[2rem] p-8 flex flex-col items-center text-center space-y-4 hover:border-primary-200 hover:shadow-xl transition-all group shadow-sm"
+                    >
+                        <div className="w-16 h-16 bg-primary-50 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform">
+                            <BarChart3 className="w-8 h-8 text-primary-600" />
+                        </div>
+                        <div>
+                            <p className="text-xl font-black text-slate-900 uppercase tracking-tight">Learner Analytics</p>
+                            <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest mt-1">Monitor Class Performance</p>
+                        </div>
+                    </button>
+
+                    <button
+                        onClick={() => setActiveTab('students')}
+                        className="bg-white border border-slate-100 rounded-[2rem] p-8 flex flex-col items-center text-center space-y-4 hover:border-indigo-200 hover:shadow-xl transition-all group shadow-sm"
+                    >
+                        <div className="w-16 h-16 bg-indigo-50 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform">
+                            <Users className="w-8 h-8 text-indigo-600" />
+                        </div>
+                        <div>
+                            <p className="text-xl font-black text-slate-900 uppercase tracking-tight">Leaner Profiles</p>
+                            <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest mt-1">Individual neural history</p>
+                        </div>
+                    </button>
+                </div>
+
+                {/* Secondary Actions / Approval Focus */}
+                <div className="bg-amber-50/50 border border-amber-100 rounded-[2rem] p-8 flex items-center justify-between shadow-sm">
+                    <div className="flex items-center space-x-6">
+                        <div className="w-12 h-12 bg-amber-100 rounded-xl flex items-center justify-center">
+                            <AlertCircle className="w-6 h-6 text-amber-600" />
+                        </div>
+                        <div>
+                            <h3 className="text-lg font-black text-slate-900 uppercase tracking-tight">Approval Queue</h3>
+                            <p className="text-xs text-slate-500 font-bold uppercase tracking-widest">You have {Array.isArray(pendingUnits) ? pendingUnits.filter(u => !u.isApproved || !u.isAssessmentApproved).length : 0} items awaiting review</p>
+                        </div>
+                    </div>
+                    <button 
+                        onClick={() => setActiveTab('approvals')}
+                        className="px-6 py-3 bg-white border border-amber-200 text-amber-700 hover:bg-amber-100 rounded-xl text-xs font-black uppercase tracking-widest transition-all shadow-sm"
+                    >
+                        View Queue →
                     </button>
                 </div>
 
@@ -596,9 +594,9 @@ const AdminDashboard = () => {
                                                     <div className="bg-slate-50 rounded-2xl p-6 border border-slate-100">
                                                         <div className="flex items-center justify-between mb-4">
                                                             <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Mapped State: {JSON.stringify(intelligenceData.rlVitals.timing.state_key)}</span>
-                                                            <span className="px-2 py-0.5 bg-indigo-600 text-white rounded text-[8px] font-black uppercase tracking-widest">Active Map</span>
+                                                            <span className="px-2 py-0.5 bg-indigo-600 text-white rounded text-[8px] font-black uppercase tracking-widest hidden sm:block">Active Map</span>
                                                         </div>
-                                                        <div className="grid grid-cols-3 gap-3">
+                                                        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                                                             {intelligenceData.rlVitals.timing.q_values.map((val, i) => (
                                                                 <div key={i} className="bg-white p-4 rounded-xl border border-slate-100 shadow-sm text-center group cursor-default">
                                                                     <p className="text-sm font-black text-slate-900">{val.toFixed(3)}</p>
@@ -648,14 +646,14 @@ const AdminDashboard = () => {
                                                             </div>
                                                         </div>
 
-                                                        <div className="grid grid-cols-4 gap-4 mb-8">
+                                                        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-4 mb-8">
                                                             {(intelligenceData.rlVitals?.content?.q_values || []).map((val, i) => (
-                                                                <div key={i} className="bg-white p-5 rounded-2xl border border-slate-100 shadow-sm text-center relative group hover:border-primary-200 transition-all">
+                                                                <div key={i} className="bg-white p-3 sm:p-5 rounded-2xl border border-slate-100 shadow-sm text-center relative group hover:border-primary-200 transition-all">
                                                                     <p className="text-sm font-black text-slate-900 mb-1">{val?.toFixed(3) || "0.000"}</p>
                                                                     <p className="text-[8px] text-slate-400 font-black uppercase tracking-tighter truncate">{intelligenceData.rlVitals?.content?.actions?.[i] || "Modality"}</p>
                                                                     {val === Math.max(...(intelligenceData.rlVitals?.content?.q_values || [0])) && (
-                                                                        <div className="absolute -top-2 left-1/2 -translate-x-1/2 px-2 py-0.5 bg-primary-600 text-white text-[7px] font-black uppercase tracking-widest rounded shadow-lg">
-                                                                            POLICY WINNER
+                                                                        <div className="absolute -top-2 left-1/2 -translate-x-1/2 px-1 py-0.5 bg-primary-600 text-white text-[6px] sm:text-[7px] font-black uppercase tracking-widest rounded shadow-lg whitespace-nowrap">
+                                                                            WINNER
                                                                         </div>
                                                                     )}
                                                                 </div>
@@ -667,11 +665,11 @@ const AdminDashboard = () => {
                                                             <div className="border-t border-slate-200/50 pt-6">
                                                                 <p className="text-[9px] font-black text-slate-400 uppercase tracking-[0.2em] mb-4">Neural Strategy Matrix (4-Modality View)</p>
                                                                 
-                                                                <div className="overflow-hidden border border-slate-100 rounded-2xl">
+                                                                <div className="overflow-x-auto overflow-y-hidden border border-slate-100 rounded-2xl">
                                                                     <table className="w-full text-left border-collapse">
                                                                         <thead>
                                                                             <tr className="bg-slate-50/50">
-                                                                                <th className="p-3 text-[7px] font-black text-slate-400 uppercase border-b border-r border-slate-100">Accuracy Status</th>
+                                                                            <th className="p-3 text-[7px] font-black text-slate-400 uppercase border-b border-r border-slate-100">Cognitive State (Ret / Time)</th>
                                                                                 {(intelligenceData.rlVitals?.content?.actions || []).map(action => (
                                                                                     <th key={action} className="p-3 text-[7px] font-black text-slate-400 uppercase border-b border-slate-100 text-center">{action?.replace('_', '/')}</th>
                                                                                 ))}
@@ -681,7 +679,10 @@ const AdminDashboard = () => {
                                                                             {(intelligenceData.rlVitals?.strategy_matrix || []).map((row, idx) => (
                                                                                 <tr key={idx} className="group hover:bg-slate-50/30 transition-colors">
                                                                                     <td className="p-3 border-b border-r border-slate-100">
-                                                                                        <span className="text-[8px] font-black text-slate-600 uppercase">IF {row?.accuracy_level}</span>
+                                                                                            <div className="flex flex-col">
+                                                                <span className="text-[8px] font-black text-slate-600 uppercase">{row?.retention_bucket} RETENTION</span>
+                                                                <span className="text-[7px] font-bold text-slate-400 uppercase mt-0.5">{row?.time_bucket} WINDOW</span>
+                                                            </div>
                                                                                     </td>
                                                                                     {(row?.scores || []).map((score, sIdx) => (
                                                                                         <td key={sIdx} className={`p-3 border-b border-slate-100 text-center transition-all ${sIdx === row?.best_idx ? 'bg-primary-50/50' : ''}`}>

@@ -231,6 +231,31 @@ const SyllabusView = () => {
           </div>
         </div>
       </div>
+      
+      {/* MOBILE BOTTOM NAV */}
+      <div className="lg:hidden fixed bottom-0 left-0 w-full bg-white border-t border-slate-100 flex items-center justify-around py-4 pb-6 z-50 shadow-[0_-10px_40px_-15px_rgba(0,0,0,0.1)]">
+          <button onClick={() => navigate('/dashboard')} className="flex flex-col items-center text-slate-400 hover:text-emerald-600 transition-colors">
+              <LayoutDashboard className="w-5 h-5 mb-1" />
+              <span className="text-[7px] font-bold uppercase tracking-tighter">Home</span>
+          </button>
+          <button onClick={() => navigate('/courses')} className="flex flex-col items-center text-emerald-600 transition-colors">
+              <BookOpen className="w-5 h-5 mb-1" />
+              <span className="text-[7px] font-bold uppercase tracking-tighter">Grid</span>
+          </button>
+          <button onClick={() => navigate('/schedule')} className="flex flex-col items-center text-slate-400 hover:text-emerald-600 transition-colors">
+              <Calendar className="w-5 h-5 mb-1" />
+              <span className="text-[7px] font-bold uppercase tracking-tighter">Schedule</span>
+          </button>
+          <button onClick={() => navigate('/analytics')} className="flex flex-col items-center text-slate-400 hover:text-emerald-600 transition-colors">
+              <BarChart3 className="w-5 h-5 mb-1" />
+              <span className="text-[7px] font-bold uppercase tracking-tighter">Flow</span>
+          </button>
+           <button onClick={logout} className="flex flex-col items-center text-rose-400 hover:text-rose-600 transition-colors">
+              <LogOut className="w-5 h-5 mb-1" />
+              <span className="text-[7px] font-bold uppercase tracking-tighter">Exit</span>
+          </button>
+      </div>
+            
     </div>
   );
 };

@@ -33,32 +33,29 @@ class ContentRLEngine:
         with open(self.q_table_path, 'wb') as f:
             pickle.dump(self.q_table, f)
 
-    def get_state_key(self, retention, last_quiz_score, last_content_type, engagement_level):
-        """
-        Creates a state tuple for the Q-Table
-        - retention: 0-10 levels (from 0.0 to 1.0)
-        - last_quiz_score: 0-10 levels (from 0.0 to 1.0)
-        - last_content_type: 0-3 index
-        - engagement_level: 0 (low) or 1 (high)
-        """
-        r_level = max(0, min(int(retention * 10), 10))
-        q_level = max(0, min(int(last_quiz_score * 10), 10))
+    def get_state_key(self, retention, time_since_review):
+        # State representation: (retention_bucket, time_bucket)
+        # Unified with Scheduling Engine and Academic Research
         
-        if last_content_type in self.actions:
-            c_idx = self.actions.index(last_content_type)
-        else:
-            c_idx = 0 # Default read_write
-            
-        e_level = 1 if engagement_level else 0
+        # 1. Retention Bucket
+        if retention >= 0.7: r_bucket = 2
+        elif retention >= 0.5: r_bucket = 1
+        else: r_bucket = 0
         
-        return (r_level, q_level, c_idx, e_level)
+        # 2. Time Bucket
+        if time_since_review <= 3: t_bucket = 0
+        elif time_since_review <= 10: t_bucket = 1
+        else: t_bucket = 2
+        
+        return (r_bucket, t_bucket)
 
-    def get_content_type(self, retention, last_quiz_score, last_content_type, engagement_level):
+
+    def get_content_type(self, retention, time_since_review):
         """
         Selects the best content format using epsilon-greedy + confidence check.
         Returns the action name (e.g., 'video') and the reason 
         """
-        state_key = self.get_state_key(retention, last_quiz_score, last_content_type, engagement_level)
+        state_key = self.get_state_key(retention, time_since_review)
         
         if state_key not in self.q_table:
             # Initialize with small positive values to encourage exploration initially

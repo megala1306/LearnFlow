@@ -5,7 +5,7 @@ export default function SubjectDetails() {
 
   useEffect(() => {
     // Replace with your backend URL
-    fetch("http://localhost:5000/api/subjects")
+    fetch("https://learnflow-backend-79r2.onrender.com/api/subjects")
       .then(res => res.json())
       .then(data => {
         // Assuming you want the first subject for now
