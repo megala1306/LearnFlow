@@ -289,7 +289,7 @@ router.get('/user-intelligence/:userId', auth, async (req, res) => {
             
             const vitalsRes = await axios.post(`${mlServiceUrl}/get-state-vitals`, {
                 retention: user.retention_score ?? 0.8,
-                time_since_review: latest.time_since_last_review ?? 0,
+                days_since_last_review: latest.time_since_last_review ?? 0,
                 complexity: latest.complexity ?? 'medium',
                 last_quiz_score: latest.quiz_result ?? 0.7,
                 last_content_type: latest.actual_modality || latest.module_type || 'read_write',

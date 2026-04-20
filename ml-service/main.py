@@ -258,19 +258,19 @@ def generate_assessment(req: AssessmentRequest):
 class ContentUpdateReq(BaseModel):
     retention: float
     last_quiz_score: float
-    last_content_type: str
-    engagement_level: int
-    actual_content_used: str
+    last_modality: str
+    days_since_last_review: float
     reward: float
     next_retention: float
-    next_quiz_score: float
+    next_days_since_last_review: float
+    actual_modality_used: str
 
 @app.post("/update-content-q")
 def update_content_q(req: ContentUpdateReq):
-    state = content_engine.get_state_key(req.retention, req.last_quiz_score, req.last_content_type, req.engagement_level)
-    next_state = content_engine.get_state_key(req.next_retention, req.next_quiz_score, req.actual_content_used, 1)
+    state = content_engine.get_state_key(req.retention, req.days_since_last_review)
+    next_state = content_engine.get_state_key(req.next_retention, req.next_days_since_last_review)
     
-    new_q = content_engine.update_q_table(state, req.actual_content_used, req.reward, next_state)
+    new_q = content_engine.update_q_table(state, req.actual_modality_used, req.reward, next_state)
     return {"status": "success", "new_q_value": new_q}
 
 class UpdatePerformanceRequest(BaseModel):
@@ -285,20 +285,17 @@ class StateVitalsRequest(BaseModel):
     retention: float
     time_since_review: float
     complexity: str
-    last_quiz_score: float
-    last_content_type: str
-    engagement_level: int
+    days_since_last_review: float = 0
 
 @app.post("/get-state-vitals")
-def get_state_vitals(req: StateVitalsRequest):
-    print(f"[ML-ADMIN] Fetching Vitals for: Retention={req.retention}, LastQuiz={req.last_quiz_score}")
+def get_admin_vitals(req: StateVitalsRequest):
     # 1. Timing Engine State
-    timing_state = engine.get_state_key(req.retention, req.time_since_review, req.complexity)
-    timing_q = engine.q_table.get(timing_state, [0.0, 0.0, 0.0])
+    timing_state = timing_engine.get_state_key(req.retention, req.days_since_last_review)
+    timing_q = timing_engine.q_table.get(timing_state, [0.0, 0.0, 0.0])
     if isinstance(timing_q, np.ndarray): timing_q = timing_q.tolist()
 
     # 2. Content Engine State
-    content_state = content_engine.get_state_key(req.retention, req.last_quiz_score, req.last_content_type, req.engagement_level)
+    content_state = content_engine.get_state_key(req.retention, req.days_since_last_review)
     content_q = content_engine.q_table.get(content_state, [0.0, 0.0, 0.0, 0.0])
     if isinstance(content_q, np.ndarray): content_q = content_q.tolist()
 
