@@ -1,6 +1,6 @@
 // frontend/src/context/AuthContext.jsx
 import React, { createContext, useState, useContext, useEffect } from 'react';
-import apiClient from '../api/apiClient';
+import apiClient, { warmUpML } from '../api/apiClient';
 
 const AuthContext = createContext();
 
@@ -63,6 +63,7 @@ export const AuthProvider = ({ children }) => {
         sessionStorage.setItem('token', res.data.token);
         sessionStorage.setItem('user', JSON.stringify(res.data.user));
         setUser(res.data.user);
+        warmUpML(); // 🧠 WAKE UP AI ENGINE
         setLoading(false);
         return res.data;
     };
@@ -73,6 +74,7 @@ export const AuthProvider = ({ children }) => {
         sessionStorage.setItem('token', res.data.token);
         sessionStorage.setItem('user', JSON.stringify(res.data.user));
         setUser(res.data.user);
+        warmUpML(); // 🧠 WAKE UP AI ENGINE
         setLoading(false);
         return res.data;
     };

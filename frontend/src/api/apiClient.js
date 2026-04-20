@@ -91,6 +91,17 @@ export const fetchInteractions = () => {
 };
 
 // --------------------------------------------------
+// INTELLIGENCE WARM-UP (Auto-Awakening)
+// --------------------------------------------------
+export const warmUpML = () => {
+    // Ping the ML service via a non-blocking call to ensure it's awake on Render
+    console.log("[AI-CORE] Sending heart-beat to wake up ML Service...");
+    return apiClient.get('/recommendations/next?warmup=true').catch(() => {
+        // Silently ignore errors - this is just a wake-up call
+    });
+};
+
+// --------------------------------------------------
 // USERS
 // --------------------------------------------------
 export const fetchCurrentUser = () => {
