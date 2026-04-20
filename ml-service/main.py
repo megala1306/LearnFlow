@@ -1,7 +1,7 @@
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 from engine.forgetting_curve import estimate_retention
-from engine.rl_engine import engine
+from engine.rl_engine import engine as timing_engine
 from engine.content_rl_engine import content_engine
 from engine.vark_logic import get_recommended_module
 from nlp.question_generator import generate_questions
@@ -15,25 +15,20 @@ app = FastAPI(title="LearnFlow ML Service")
 
 class RetentionRequest(BaseModel):
     days_since_last_review: float
-    k: float = None
+    k: float = 0.05
     s: float = 1.0
 
 class ActionRequest(BaseModel):
     retention: float
     days_since_last_review: float
-    complexity: str = "easy"
-    k: float = None
 
 class UpdateRequest(BaseModel):
     retention: float
     days_since_last_review: float
-    complexity: str = "easy"
     action: int
     reward: float
     next_retention: float
     next_days: float
-    next_complexity: str = "easy"
-    k: float = None
 
 class CalibrateKRequest(BaseModel):
     current_k: float
@@ -66,7 +61,7 @@ def get_forgetting_curve(req: RetentionRequest):
 
 @app.post("/select-action")
 def select_action(req: ActionRequest):
-    result = engine.select_action(req.retention, req.days_since_last_review, req.complexity)
+    result = timing_engine.select_action(req.retention, req.days_since_last_review)
     actions = ['no_review', 'light_review', 'immediate_review']
     
     return {
@@ -80,9 +75,9 @@ def select_action(req: ActionRequest):
 
 @app.post("/update-q")
 def update_q(req: UpdateRequest):
-    state = engine.get_state_key(req.retention, req.days_since_last_review, req.complexity)
-    next_state = engine.get_state_key(req.next_retention, req.next_days, req.next_complexity)
-    engine.update_q_value(state, req.action, req.reward, next_state)
+    state = timing_engine.get_state_key(req.retention, req.days_since_last_review)
+    next_state = timing_engine.get_state_key(req.next_retention, req.next_days)
+    timing_engine.update_q_value(state, req.action, req.reward, next_state)
     return {"status": "Q-table updated"}
 
 @app.post("/initialize-state")
@@ -155,7 +150,7 @@ def recommend_next(req: NextRecommendationRequest):
         # NEW USER: strictly respect preference, no changes
         resolved_modality = req.preferred_style
     else:
-        rl_result = engine.select_action(req.retention, req.days_since_last_review, req.last_complexity)
+        rl_result = timing_engine.select_action(req.retention, req.days_since_last_review)
         actions = ['no_review', 'light_review', 'immediate_review']
         rl_action = actions[rl_result["action"]]
 
@@ -283,9 +278,7 @@ class UpdatePerformanceRequest(BaseModel):
 
 class StateVitalsRequest(BaseModel):
     retention: float
-    time_since_review: float
-    complexity: str
-    days_since_last_review: float = 0
+    days_since_last_review: float
 
 @app.post("/get-state-vitals")
 def get_admin_vitals(req: StateVitalsRequest):
