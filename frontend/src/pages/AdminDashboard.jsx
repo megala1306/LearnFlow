@@ -593,7 +593,14 @@ const AdminDashboard = () => {
                                                 {intelligenceData.rlVitals?.timing ? (
                                                     <div className="bg-slate-50 rounded-2xl p-6 border border-slate-100">
                                                         <div className="flex items-center justify-between mb-4">
-                                                            <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Mapped State: {JSON.stringify(intelligenceData.rlVitals.timing.state_key)}</span>
+                                                            <div className="flex items-center space-x-2">
+                                                                <span className="px-2 py-1 bg-slate-200 text-slate-700 rounded text-[9px] font-black uppercase tracking-widest">
+                                                                    {intelligenceData.rlVitals.timing.state_key?.[0]} Retention
+                                                                </span>
+                                                                <span className="px-2 py-1 bg-slate-200 text-slate-700 rounded text-[9px] font-black uppercase tracking-widest">
+                                                                    {intelligenceData.rlVitals.timing.state_key?.[1]} Window
+                                                                </span>
+                                                            </div>
                                                             <span className="px-2 py-0.5 bg-indigo-600 text-white rounded text-[8px] font-black uppercase tracking-widest hidden sm:block">Active Map</span>
                                                         </div>
                                                         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
@@ -641,8 +648,15 @@ const AdminDashboard = () => {
 
                                                         <div className="flex items-center justify-between mb-6">
                                                             <div>
-                                                                <h4 className="text-[10px] font-black text-slate-900 uppercase tracking-widest mb-1">State Vector Vitals</h4>
-                                                                <span className="text-[9px] font-bold text-slate-400 font-mono">MAP: {JSON.stringify(intelligenceData.rlVitals?.content?.state_key || [])}</span>
+                                                                <h4 className="text-[10px] font-black text-slate-900 uppercase tracking-widest mb-2">Neural State Mapping</h4>
+                                                                <div className="flex items-center space-x-2">
+                                                                    <span className="text-[9px] font-black px-2 py-0.5 bg-emerald-100 text-emerald-700 rounded uppercase">
+                                                                        {intelligenceData.rlVitals?.content?.state_key?.[0]} Retention
+                                                                    </span>
+                                                                    <span className="text-[9px] font-black px-2 py-0.5 bg-emerald-100 text-emerald-700 rounded uppercase">
+                                                                        {intelligenceData.rlVitals?.content?.state_key?.[1]} Window
+                                                                    </span>
+                                                                </div>
                                                             </div>
                                                         </div>
 
