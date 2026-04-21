@@ -180,10 +180,10 @@ router.post("/submit", auth, async (req, res) => {
       console.log(`[ASSESSMENT-SYNC] ML Response: ${recommendation} | Next: ${nextDifficulty}`);
     } catch (mlErr) {
       console.error(`[ASSESSMENT-SYNC-WARNING] ML Service unreachable or timed out: ${mlErr.message}. Using heuristic fallback.`);
-      if (accuracy >= 0.8) { 
+      if (accuracy >= 0.7) { 
         nextDifficulty = "hard"; 
         recommendation = "next_lesson"; 
-      } else if (accuracy >= 0.6) { 
+      } else if (accuracy >= 0.5) { 
         nextDifficulty = "medium"; 
         recommendation = "practice"; 
       } else { 
@@ -218,7 +218,7 @@ router.post("/submit", auth, async (req, res) => {
 
       // Calculate dynamic review interval (in milliseconds)
       // If accuracy is very low, prioritize immediate revisit (0 delay)
-      const intervalMs = accuracy < 0.6 ? 0 : (newStability * 24 * 60 * 60 * 1000);
+      const intervalMs = accuracy < 0.5 ? 0 : (newStability * 24 * 60 * 60 * 1000);
       const nextReviewDate = new Date(Date.now() + intervalMs);
 
       if (rsEntry) {
@@ -312,11 +312,11 @@ router.post("/submit", auth, async (req, res) => {
             retention: unit.complexity === 'hard' ? 0.9 : unit.complexity === 'medium' ? 0.7 : 0.5, // Heuristic if not provided
             days_since: 0, 
             complexity: unit.complexity || 'easy',
-            action_idx: accuracy >= 0.8 ? 0 : accuracy >= 0.6 ? 1 : 2
+            action_idx: accuracy >= 0.7 ? 0 : accuracy >= 0.5 ? 1 : 2
         };
 
         // A. Timing Model Update (Reward Signal)
-        const timingReward = accuracy >= 0.8 ? 1.0 : accuracy >= 0.6 ? 0.4 : -1.0;
+        const timingReward = accuracy >= 0.7 ? 1.0 : accuracy >= 0.5 ? 0.4 : -1.0;
         await axios.post(`${ML_SERVICE}/update-q`, {
             retention: statsAtSubmission.retention,
             days_since_last_review: statsAtSubmission.days_since,
@@ -329,16 +329,16 @@ router.post("/submit", auth, async (req, res) => {
         });
 
         // B. Content Model Update (Multimodal Reward)
-        const contentReward = accuracy >= 0.8 ? 1.0 : accuracy >= 0.6 ? 0.5 : -0.5;
+        const contentReward = accuracy >= 0.7 ? 1.0 : accuracy >= 0.5 ? 0.5 : -0.5;
         await axios.post(`${ML_SERVICE}/update-content-q`, {
             retention: statsAtSubmission.retention,
             last_quiz_score: accuracy,
-            last_content_type: interactionRecord.module_type,
-            engagement_level: accuracy >= 0.6 ? 1 : 0,
-            actual_content_used: interactionRecord.module_type,
+            last_modality: interactionRecord.actual_modality,
+            days_since_last_review: statsAtSubmission.days_since,
             reward: contentReward,
             next_retention: accuracy,
-            next_quiz_score: accuracy
+            next_days_since_last_review: 0,
+            actual_modality_used: interactionRecord.actual_modality
         });
         console.log(`[RL-SYNC] Successfully propagated rewards for User: ${userId}`);
       } catch (rlErr) {

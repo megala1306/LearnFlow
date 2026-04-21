@@ -31,9 +31,9 @@ async function recover() {
         for (let i = 0; i < legacyInts.length; i++) {
             let legacy = legacyInts[i];
             
-            // Re-mapping the results you reported (80% and 50%)
+            // Re-mapping the results you reported (70% and 50%)
             // We use your actual report here since the legacy data had different IDs
-            const accuracy = (i === 1) ? 0.8 : 0.5; 
+            const accuracy = (i === 1) ? 0.7 : 0.5; 
             const lesson_id = (i === 1) ? lesson1_id : lesson2_id;
             const unit_id = (i === 1) ? unit1_id : unit2_id;
 
@@ -48,7 +48,9 @@ async function recover() {
             legacy.quiz_result = accuracy;
             legacy.quiz_score = accuracy;
             legacy.predicted_retention = accuracy;
-            legacy.recommended_action = (accuracy < 0.7) ? 'immediate_review' : 'no_review';
+            
+            // 3-Bucket Logic Sync
+            legacy.recommended_action = (accuracy < 0.5) ? 'immediate_review' : (accuracy < 0.7 ? 'light_review' : 'no_review');
             
             await legacy.save();
             console.log(` - UPGRADED: Interaction ${i + 1} with score ${Math.round(accuracy * 100)}% correctly re-linked.`);

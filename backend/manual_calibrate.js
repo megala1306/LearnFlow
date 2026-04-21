@@ -14,7 +14,7 @@ async function recalibrate() {
 
     console.log(`Recalibrating Neural Fidelity for: ${user.email}`);
 
-    // LESSON 1 FIX: If no record found, we will manually apply the 80% success you performed
+    // LESSON 1 FIX: If no record found, we will manually apply the 70% success you performed
     const lesson1_id = "69cbdfeb208e1a21f645b139"; // Python Essentials
     const lesson2_id = "69cbdfeb208e1a21f645b14f"; // Control Flow
 
@@ -22,10 +22,10 @@ async function recalibrate() {
         const item = user.revisionSchedule[i];
         
         if (item.lessonId.toString() === lesson1_id) {
-            // Apply 80% logic: (1.0 * 0.4) + (0.8 * 0.6) = 0.88
-            user.revisionSchedule[i].retention = 0.88;
-            user.revisionSchedule[i].review_type = 'no_review'; // Since 80% is high, no immediate repair needed
-            console.log(" - Fixed Lesson 1: Fidelity set to 88% (based on your 80% quiz score)");
+            // Apply 70% logic: (1.0 * 0.4) + (0.7 * 0.6) = 0.82
+            user.revisionSchedule[i].retention = 0.82;
+            user.revisionSchedule[i].review_type = 'no_review'; // Since 70% is the success threshold
+            console.log(" - Fixed Lesson 1: Fidelity set to 82% (based on your 70% quiz score)");
         } 
         else if (item.lessonId.toString() === lesson2_id) {
             // Apply 50% logic: (1.0 * 0.4) + (0.5 * 0.6) = 0.70

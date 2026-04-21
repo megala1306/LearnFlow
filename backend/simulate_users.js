@@ -130,8 +130,8 @@ async function simulate() {
 
                 // Adaptive system logic
                 let systemAction = 'No Review';
-                if (quizScore < 60) systemAction = 'Immediate Review';
-                else if (quizScore < 80) systemAction = 'Light Review';
+                if (quizScore < 50) systemAction = 'Immediate Review';
+                else if (quizScore < 70) systemAction = 'Light Review';
 
                 let difficultyLevel = unit.complexity.charAt(0).toUpperCase() + unit.complexity.slice(1);
                 
@@ -155,11 +155,11 @@ async function simulate() {
                 await interaction.save();
 
                 // 2.2 Update User Stats (Logic from assessment.js)
-                const xpGained = quizScore >= 80 ? 50 : 20;
+                const xpGained = quizScore >= 70 ? 50 : 20;
                 user.xp_points = (user.xp_points || 0) + xpGained;
 
                 let rsEntry = user.revisionSchedule.find(rs => rs.unit_id.toString() === unit.id);
-                const nextReviewDate = new Date(currentTimestamp.getTime() + (quizScore < 80 ? 1 : 24) * 60 * 60 * 1000);
+                const nextReviewDate = new Date(currentTimestamp.getTime() + (quizScore < 70 ? 1 : 24) * 60 * 60 * 1000);
 
                 if (rsEntry) {
                     rsEntry.complexity = difficultyLevel.toLowerCase();
@@ -199,8 +199,8 @@ async function simulate() {
                 // --- 2.3 RL FEEDBACK LOOP (NEW: SYNC WITH ML ENGINE) ---
                 try {
                     // A. Timing Model Feedback
-                    const timingActionIdx = quizScore >= 80 ? 0 : (quizScore >= 60 ? 1 : 2);
-                    const timingReward = quizScore >= 80 ? 1.0 : (quizScore >= 60 ? 0.4 : -1.0);
+                    const timingActionIdx = quizScore >= 70 ? 0 : (quizScore >= 50 ? 1 : 2);
+                    const timingReward = quizScore >= 70 ? 1.0 : (quizScore >= 50 ? 0.4 : -1.0);
                     
                     await axios.post(`${ML_SERVICE_URL}/update-q`, {
                         retention: currentKnowledge, // state at start
@@ -214,7 +214,7 @@ async function simulate() {
                     });
 
                     // B. Content Modality Feedback
-                    const contentReward = quizScore >= 80 ? 1.0 : (quizScore >= 60 ? 0.5 : -1.0);
+                    const contentReward = quizScore >= 70 ? 1.0 : (quizScore >= 50 ? 0.5 : -1.0);
                     await axios.post(`${ML_SERVICE_URL}/update-content-q`, {
                         retention: prevKnowledge, // STATE BEFORE
                         last_quiz_score: prevScore, // STATE BEFORE

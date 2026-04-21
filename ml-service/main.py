@@ -137,7 +137,7 @@ def recommend_next(req: NextRecommendationRequest):
     if req.is_new_user:
         target_complexity = req.preferred_complexity
     else:
-        if req.quiz_result >= 0.75:
+        if (req.quiz_result >= 0.70):
             if req.last_complexity == 'easy': target_complexity = 'medium'
             elif req.last_complexity == 'medium': target_complexity = 'hard'
             else: target_complexity = 'hard'
@@ -327,10 +327,10 @@ def get_admin_vitals(req: StateVitalsRequest):
 @app.post("/update-performance")
 def update_performance(req: UpdatePerformanceRequest):
     # 1. Determine fixed thresholds (keeping logic consistent with app.py)
-    if req.accuracy >= 0.8:
+    if req.accuracy >= 0.7:
         next_difficulty = "hard"
         recommendation = "next_lesson"
-    elif req.accuracy >= 0.6:
+    elif req.accuracy >= 0.5:
         next_difficulty = "medium"
         recommendation = "practice"
     else:

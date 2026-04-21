@@ -673,55 +673,6 @@ const AdminDashboard = () => {
                                                                 </div>
                                                             ))}
                                                         </div>
-
-                                                        {/* Strategic Trend Matrix Grid */}
-                                                        {intelligenceData.rlVitals?.strategy_matrix && (
-                                                            <div className="border-t border-slate-200/50 pt-6">
-                                                                <p className="text-[9px] font-black text-slate-400 uppercase tracking-[0.2em] mb-4">Neural Strategy Matrix (4-Modality View)</p>
-                                                                
-                                                                <div className="overflow-x-auto overflow-y-hidden border border-slate-100 rounded-2xl">
-                                                                    <table className="w-full text-left border-collapse">
-                                                                        <thead>
-                                                                            <tr className="bg-slate-50/50">
-                                                                            <th className="p-3 text-[7px] font-black text-slate-400 uppercase border-b border-r border-slate-100">Cognitive State (Ret / Time)</th>
-                                                                                {(intelligenceData.rlVitals?.content?.actions || []).map(action => (
-                                                                                    <th key={action} className="p-3 text-[7px] font-black text-slate-400 uppercase border-b border-slate-100 text-center">{action?.replace('_', '/')}</th>
-                                                                                ))}
-                                                                            </tr>
-                                                                        </thead>
-                                                                        <tbody>
-                                                                            {(intelligenceData.rlVitals?.strategy_matrix || []).map((row, idx) => (
-                                                                                <tr key={idx} className="group hover:bg-slate-50/30 transition-colors">
-                                                                                    <td className="p-3 border-b border-r border-slate-100">
-                                                                                            <div className="flex flex-col">
-                                                                <span className="text-[8px] font-black text-slate-600 uppercase">{row?.retention_bucket} RETENTION</span>
-                                                                <span className="text-[7px] font-bold text-slate-400 uppercase mt-0.5">{row?.time_bucket} WINDOW</span>
-                                                            </div>
-                                                                                    </td>
-                                                                                    {(row?.scores || []).map((score, sIdx) => (
-                                                                                        <td key={sIdx} className={`p-3 border-b border-slate-100 text-center transition-all ${sIdx === row?.best_idx ? 'bg-primary-50/50' : ''}`}>
-                                                                                            <div className="flex flex-col items-center">
-                                                                                                <span className={`text-[9px] font-black ${sIdx === row?.best_idx ? 'text-primary-700' : 'text-slate-400'}`}>
-                                                                                                    {score?.toFixed(3) || "0.000"}
-                                                                                                </span>
-                                                                                                {sIdx === row?.best_idx && (
-                                                                                                    <span className="text-[6px] font-black text-primary-500 uppercase mt-0.5 animate-pulse">Winner</span>
-                                                                                                )}
-                                                                                            </div>
-                                                                                        </td>
-                                                                                    ))}
-                                                                                </tr>
-                                                                            ))}
-                                                                        </tbody>
-                                                                    </table>
-                                                                </div>
-
-                                                                <p className="mt-4 text-[8px] text-slate-400 italic leading-relaxed">
-                                                                    * Matrix shows AI confidence across all 4 modalities for different performance tiers. 
-                                                                    Global winner at each level is highlighted in <b>Primary Blue</b>.
-                                                                </p>
-                                                            </div>
-                                                        )}
                                                     </div>
                                                 ) : (
                                                     <div className="bg-slate-50 border border-slate-100 p-6 rounded-2xl">

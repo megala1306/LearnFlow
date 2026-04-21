@@ -151,13 +151,13 @@ router.get('/schedule', auth, async (req, res) => {
                 item.stability || 1.0
             );
 
-            // Dynamic Urgency Override based on Real-time Decay (Strict 60/80 Rule)
+            // Dynamic Urgency Override based on Real-time Decay (Strict 50/70 Research Model)
             const retentionPct = Math.round(currentRetention * 100);
             let dynamicReviewType = 'no_review';
             
-            if (retentionPct < 60) {
+            if (retentionPct < 50) {
                 dynamicReviewType = 'immediate_review';
-            } else if (retentionPct < 80) {
+            } else if (retentionPct < 70) {
                 dynamicReviewType = 'light_review';
             } else {
                 dynamicReviewType = 'stable';

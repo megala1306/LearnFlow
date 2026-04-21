@@ -61,8 +61,6 @@ class RLEngine:
         if state_key not in self.q_table:
             self.q_table[state_key] = np.zeros(3)
         
-        # Action map for reasoning
-        action_names = {0: "No Review", 1: "Light Review", 2: "Immediate Review"}
         Q_values = self.q_table[state_key]
         
         # 2. COMPUTE CONFIDENCE GAP
@@ -71,26 +69,39 @@ class RLEngine:
         second_best = sorted_q[1]
         confidence_gap = float(best - second_best)
         
-        # 3. DECISION LOGIC (CONFIDENCE-BASED HANDOVER)
-        CONFIDENCE_THRESHOLD = 0.2
+        # 3. DECISION LOGIC (HEURISTIC-GUIDED RL)
+        # We ensure the RL agent stays within your 70/50 research bounds
+        academic_heuristic = self.forgetting_curve_decision(retention)
         
-        # Epsilon-greedy exploration still exists but is subordinate to policy check
+        CONFIDENCE_THRESHOLD = 0.3 # Higher threshold to rely more on heuristic for now
+        
         is_exploring = np.random.random() < self.params.get('epsilon', 0.1)
         
         if is_exploring:
             action = int(np.random.randint(0, 3))
             source = "exploration"
-            reason = "Exploration: Testing a different path to optimize long-term mastery."
+            reason = "Exploration: Multi-modal testing for policy optimization."
         elif confidence_gap >= CONFIDENCE_THRESHOLD:
-            # RL IS PRIMARY DECISION MAKER
+            # RL agent makes the call
             action = int(np.argmax(Q_values))
             source = "rl"
             reason = f"Policy Prediction (High Confidence: {confidence_gap:.2f})"
         else:
-            # FORGETTING CURVE FALLBACK
-            action = self.forgetting_curve_decision(retention)
-            source = "fallback"
-            reason = f"Fallback Triggered (Low Confidence: {confidence_gap:.2f})"
+            # FALLBACK TO RESEARCH-BACKED HEURISTIC (70/50 Rule)
+            action = academic_heuristic
+            source = "research_fallback"
+            reason = f"Research Guardrail (Current: {retention*100:.0f}%, Bucket: {action})"
+
+        # FINAL SANITY CHECK: Never recommend review if retention >= 70% 
+        # unless it's a specific explore case. This solves the "76% Light Review" bug.
+        if retention >= 0.7 and action != 0 and not is_exploring:
+            action = 0
+            reason = "Safety Override: Academic stability threshold reached (>=70%)."
+        
+        # Ensure 50% doesn't fall into immediate review
+        if retention >= 0.5 and retention < 0.7 and action == 2 and not is_exploring:
+            action = 1
+            reason = "Safety Override: Moderate stability (50-70%) requires Light Review."
 
         return {
             "action": action,
